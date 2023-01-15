@@ -1,0 +1,143 @@
+<div id="kt_aside" class="aside bg-primary" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
+    <!--begin::Logo-->
+    <div class="aside-logo d-none d-lg-flex flex-column align-items-center flex-column-auto py-8" id="kt_aside_logo">
+        <a href="/admin">
+            <img alt="Logo" src="{{ asset('gambar/logo-vbook.png') }}" class="h-40px" />
+        </a>
+    </div>
+    <!--end::Logo-->
+    <!--begin::Nav-->
+    <div class="aside-nav d-flex flex-column align-lg-center flex-column-fluid w-100 pt-5 pt-lg-0" id="kt_aside_nav">
+        <!--begin::Primary menu-->
+        <div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold fs-6" data-kt-menu="true">
+
+
+
+
+            @if (auth()->user()->role_id == 2)
+            <div class="menu-item">
+                <a class="menu-link" href="/admin">
+                    <span class="menu-link menu-center" title="Dashboards" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-bar-chart-line fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="/admin/manage-room">
+                    <span class="menu-link menu-center" title="Manage Room" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-bank2 fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="/admin/manage-user">
+                    <span class="menu-link menu-center" title="Manage User" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-person-video2 fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="/admin/report">
+                    <span class="menu-link menu-center" title="List Report Booking" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-file-text fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="/admin/device">
+                    <span class="menu-link menu-center" title="Device" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-tv fs-2"></i>
+
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+
+            <div class="menu-item">
+                <a class="menu-link" href="/booking">
+                    <span class="menu-link menu-center" title="Create Booking Room" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-file-check fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('seeting-admin.index')}}">
+                    <span class="menu-link menu-center" title="Setting" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-gear fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+
+            @endif
+
+
+
+
+            @if (auth()->user()->role_id == 1)
+            <div class="menu-item">
+                <a class="menu-link" href="/suadmin">
+                    <span class="menu-link menu-center" title="Dashboards" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-bar-chart-line fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('manage-company.index')}}">
+                    <span class="menu-link menu-center" title="Manage User" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-person-video2 fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <!-- <div class="menu-item">
+                <a class="menu-link" href="{{ route('superadmin-licence.index')}}">
+                    <span class="menu-link menu-center" title="Licence Company" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-key fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div> -->
+
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('superadmin-setting.index')}}">
+                    <span class="menu-link menu-center" title="Setting" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-gear fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+
+            @endif
+        </div>
+        <!--end::Primary menu-->
+    </div>
+    <!--end::Nav-->
+
+</div>
