@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BookingRoom;
+use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class DashboardController extends Controller
         // return $bookingDate;
         // return $bookingOnGoing;
         $countUser = User::where('role_id', 3)->count();
-        $countRoom = User::where('role_id', 4)->count();
+        $countRoom = Room::count();
         return view('admin.dashboard.index', [
             'count_user' => $countUser,
             'count_room' => $countRoom,

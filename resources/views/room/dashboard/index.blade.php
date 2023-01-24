@@ -329,7 +329,7 @@
                         <form id="logout-form" action="{{ route('room.logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                        @if (auth()->user()->room->device_id == 1)
+                        @if ($device->device->use_came == 'YES')
                         <a href="/scan" class="btn btn-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-qr-code-scan mr-2" viewBox="0 0 16 16">
                                 <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0v-3Zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5ZM.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5Zm15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5ZM4 4h1v1H4V4Z" />
@@ -481,7 +481,7 @@
                 bookingOnGoing: function() {
                     let vm = this;
 
-                    axios.get('https://demo.vbooksystem.com/api-display', {
+                    axios.get('http://127.0.0.1:8000/api-display', {
                         headers: {
                             'Accept': 'application/json',
                         },
@@ -560,7 +560,7 @@
                 },
                 bookingToday: function() {
                     let vm = this;
-                    axios.get('https://demo.vbooksystem.com/api-display').then(res => {
+                    axios.get('http://127.0.0.1:8000/api-display').then(res => {
                         vm.bookingTodays = res.data.getBookingToday;
                         if (vm.bookingTodays.length < 1) {
                             vm.bookingTodaysNull = 'Tidak ada event untuk hari ini';

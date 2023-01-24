@@ -69,6 +69,8 @@ class Kernel extends HttpKernel
         'user' => \App\Http\Middleware\IsUser::class,
         'multi' => \App\Http\Middleware\IsMulti::class,
         'multiadmin' => \App\Http\Middleware\IsMultiAdmin::class,
+        'receptionist' => \App\Http\Middleware\IsReceptionist::class,
+        'guest-booking' => \App\Http\Middleware\IsGuest::class,
         'cors' => \App\Http\Middleware\Cors::class, // added
     ];
 }

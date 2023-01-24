@@ -4,6 +4,10 @@ namespace App\Http\Controllers\superadmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\CompanyDevice;
+use App\Models\Device;
+use App\Models\Division;
+use App\Models\Licence;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,7 +23,7 @@ class ManageCompanyController extends Controller
      */
     public function index()
     {
-        $user = User::with('company')->where('role_id', 2)->get();
+        $user = User::with('company', 'licence')->where('role_id', 2)->get();
         // return $user;
         return view('superadmin.manage-company.index', [
             'user' => $user,
@@ -33,7 +37,10 @@ class ManageCompanyController extends Controller
      */
     public function create()
     {
-        return view('superadmin.manage-company.create');
+        $device = Device::all();
+        return view('superadmin.manage-company.create', [
+            'device' => $device,
+        ]);
     }
 
     /**
@@ -44,11 +51,31 @@ class ManageCompanyController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
+            $length = 4;
+            $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $generateCode1 = substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+            $generateCode2 = substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+            $generateCode3 = substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+            $generateCode4 = substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+            $serial = $generateCode1 . '-' . $generateCode2 . '-' . $generateCode3 . '-' . $generateCode4;
+
+            $newLicence = new Licence();
+            $newLicence->code = $serial;
+            $newLicence->max_device = 0;
+            $newLicence->count_device = 0;
+            $newLicence->save();
 
             //create company
+            $random = mt_rand(10000000, 99999999);
+
+            // shuffle the result
+            $guestAccess = str_shuffle($random);
+
             $newCompany = new Company();
             $newCompany->name = $request->name;
+            $newCompany->guest_access = $guestAccess;
             $newCompany->aplication_name = $request->aplication_name;
             //contoh upload logo
             $logo = $request->file('logo');
@@ -65,8 +92,23 @@ class ManageCompanyController extends Controller
             $newUser->username = $request->email;
             $newUser->no_telp = $request->no_telp;
             $newUser->role_id = 2;
+            $newUser->licence_id = $newLicence->id;
             $newUser->password = Hash::make($request->password);
             $newUser->save();
+
+            $getDevice = json_decode($request->deviceId);
+
+            // return response()->json([
+            //     'data' => $getDevice,
+            // ]);
+
+            foreach ($getDevice as $newDevices) {
+                $newCompanyDevice = new CompanyDevice();
+                $newCompanyDevice->company_id = $newCompany->id;
+                $newCompanyDevice->device_id = $newDevices;
+                $newCompanyDevice->save();
+            }
+
 
 
 
@@ -76,13 +118,11 @@ class ManageCompanyController extends Controller
                 'code' => 200,
                 'error' => false,
             ]);
-        } catch (Exception $e) {
-            DB::rollback();
+        } catch (\Throwable $e) {
+            DB::rollBack();
             return response()->json([
-                'message' => 'Internal error',
-                'code' => 500,
-                'error' => true,
-                'errors' => $e,
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
             ], 500);
         }
     }

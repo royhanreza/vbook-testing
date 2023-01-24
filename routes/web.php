@@ -7,13 +7,22 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\ManageUserController;
 use App\Http\Controllers\admin\ReportBookingController;
 use App\Http\Controllers\admin\SettingWebController;
-use App\Http\Controllers\admin\DeviceController;
+use App\Http\Controllers\admin\DivisionController;
+use App\Http\Controllers\guest\AuthGuestController;
+use App\Http\Controllers\guest\CreateBookingGuestController;
+use App\Http\Controllers\guest\GuestController;
+use App\Http\Controllers\guest\SearchBookingGuestController;
+use App\Http\Controllers\receptionist\AuthReceptionistController;
+use App\Http\Controllers\receptionist\ManageGuestController;
+use App\Http\Controllers\admin\ManageReceptionistController;
+use App\Http\Controllers\receptionist\ReceptionistController;
 use App\Http\Controllers\room\AuthRoomController;
 use App\Http\Controllers\room\RoomDashboardController;
 use App\Http\Controllers\room\ScanQrcodeController;
 use App\Http\Controllers\superadmin\AuthSuperadminController;
 use App\Http\Controllers\superadmin\DashboardSuperadminController;
 use App\Http\Controllers\superadmin\LicenceController;
+use App\Http\Controllers\superadmin\DeviceController;
 use App\Http\Controllers\user\AuthGoogleController;
 use App\Http\Controllers\user\BookingRoomController;
 use App\Http\Controllers\user\DisplayAttendedController;
@@ -59,6 +68,18 @@ Route::controller(AuthGoogleController::class)->prefix('/')->group(function () {
     Route::get('/login', 'index')->name('user.login');
     Route::get('auth/google', 'redirectToGoogle')->name('user-google.login');
     Route::get('auth/google/callback', 'handleGoogleCallback')->name('user-google.callback');
+});
+
+Route::controller(AuthReceptionistController::class)->prefix('/receptionist')->group(function () {
+    Route::get('/login', 'login')->name('receptionist.login');
+    Route::get('/logout', 'logout')->name('receptionist.logout');
+    Route::post('/login', 'authenticate')->name('receptionist.authenticate');
+});
+
+Route::controller(AuthGuestController::class)->prefix('/guest-booking')->group(function () {
+    Route::get('/login', 'login')->name('guest-booking.login');
+    Route::get('/logout', 'logout')->name('guest-booking.logout');
+    Route::post('/login', 'authenticate')->name('guest-booking.authenticate');
 });
 
 
@@ -110,6 +131,13 @@ Route::group(['middleware' => 'suadmin'], function () {
     Route::controller(LicenceController::class)->prefix('/suadmin/licence')->group(function () {
         Route::get('/', 'index')->name('superadmin-licence.index');
     });
+
+    Route::controller(DeviceController::class)->prefix('/suadmin/device')->group(function () {
+        Route::get('/', 'index')->name('device-admin.index');
+        Route::get('/create', 'create')->name('device-admin.create');
+        Route::post('/', 'store')->name('device-admin.post');
+        Route::delete('/{id}', 'destroy')->name('device-admin.destroy');
+    });
 });
 // ====================================== SELESAI ROUTE HALAMAN SUPERADMIN ================================
 
@@ -146,13 +174,20 @@ Route::group(['middleware' => 'admin'], function () {
     Route::controller(ReportBookingController::class)->prefix('/admin/report')->group(function () {
         Route::get('/', 'index')->name('report-booking.index');
         Route::get('/excel', 'export_excel')->name('report-booking.excel');
-        Route::post('/{id}/edit', 'update')->name('report-booking.edit');;
+        Route::post('/{id}/edit', 'update')->name('report-booking.edit');
     });
 
-    Route::controller(DeviceController::class)->prefix('/admin/device')->group(function () {
-        Route::get('/', 'index')->name('device-admin.index');
-        Route::get('/create', 'create')->name('device-admin.create');
-        Route::post('/', 'store')->name('device-admin.post');
+    Route::controller(DivisionController::class)->prefix('/admin/manage-division')->group(function () {
+        Route::get('/', 'index')->name('manage-division.index');
+        Route::post('/', 'store')->name('manage-division.post');
+        Route::post('/{id}/edit', 'update')->name('manage-division.edit');
+    });
+
+    Route::controller(ManageReceptionistController::class)->prefix('/admin/manage-receptionist')->group(function () {
+        Route::get('/', 'index')->name('manage-receptionist.index');
+        Route::get('/create', 'create')->name('manage-receptionist.create');
+        Route::post('/', 'store')->name('manage-receptionist.post');
+        Route::post('/{id}/edit', 'update')->name('manage-receptionist.edit');
     });
 });
 // ====================================== SELESAI ROUTE HALAMAN ADMIN ================================
@@ -191,6 +226,7 @@ Route::group(['middleware' => 'user'], function () {
         Route::get('/user', 'index')->name('user.dashboard');
         Route::get('/user/profile', 'profile')->name('user.profile');
         Route::get('/user/logout', 'logout')->name('user.logout');
+        Route::post('/user/guest', 'guestAccess')->name('user.logout');
     });
 
     // // Route::controller(BookingRoomController::class)->prefix('/user/booking')->group(function () {
@@ -224,3 +260,46 @@ Route::group(['middleware' => 'multi'], function () {
     });
 });
 // ====================================== SELESAI ROUTE HALAMAN BOOKING ================================
+
+
+
+
+// ====================================== ROUTE HALAMAN RECEPTIONIST ======================================
+
+Route::group(['middleware' => 'receptionist'], function () {
+
+    Route::controller(ReceptionistController::class)->prefix('/receptionist')->group(function () {
+        Route::get('/', 'index')->name('receptionist.dashboard');
+    });
+
+    Route::controller(ManageGuestController::class)->prefix('/receptionist/manage-guest')->group(function () {
+        Route::get('/', 'index')->name('manage-guest.index');
+        Route::get('/create', 'create')->name('manage-guest.create');
+        Route::post('/', 'store')->name('manage-guest.strore');
+        Route::delete('/{id}', 'destroy')->name('manage-guest.destroy');
+        Route::post('/{id}', 'restore')->name('manage-guest.restore');
+        Route::post('/{id}/aktif', 'aktif')->name('manage-guest.aktif');
+    });
+});
+// ====================================== SELESAI ROUTE HALAMAN RECEPTIONIST ================================
+
+
+
+// ====================================== ROUTE HALAMAN GUEST ======================================
+
+Route::group(['middleware' => 'guest-booking'], function () {
+
+    Route::controller(GuestController::class)->prefix('/guest-booking')->group(function () {
+        Route::get('/', 'index')->name('guest.dashboard');
+    });
+
+    Route::controller(SearchBookingGuestController::class)->prefix('/guest-booking/search')->group(function () {
+        Route::get('/', 'index')->name('guest.search');
+    });
+
+    Route::controller(CreateBookingGuestController::class)->prefix('/guest-booking/create')->group(function () {
+        Route::get('/{id}', 'create')->name('guest.create');
+        Route::post('/', 'store')->name('guest.post');
+    });
+});
+// ====================================== SELESAI ROUTE HALAMAN GUEST ================================

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\BookingRoom;
+use App\Models\Company;
 use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -25,7 +27,7 @@ class UserDashboardController extends Controller
         //         ->get(['id', 'title', 'start_date', 'end_date']);
         //     return response()->json($data);
         // }
-
+        $companyId = Auth::user()->company_id;
         $emailUser = Auth::user()->email;
         $userId = Auth::user()->id;
         $events = array();
@@ -33,21 +35,21 @@ class UserDashboardController extends Controller
         // $myEvents = BookingRoom::with('room')->where('user_id', $userId)->whereNot('status_booking', 'finished')->get();
         $myEvents =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
             $q->where('email', $emailUser);
-        })->with(['room', 'participant'])->whereNot('status_booking', 'finished')->get();
+        })->with(['room', 'participant'])->whereNot('status_booking', 'finished')->where('company_id', $companyId)->get();
 
 
         // $bookings = BookingRoom::with('room', 'participant')->where('user_id', $userId)->get();
 
         $bookings =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
             $q->where('email', $emailUser);
-        })->with(['room', 'participant'])->get();
+        })->with(['room', 'participant'])->where('company_id', $companyId)->get();
 
         // $bookingAdmin = BookingRoom::with('room')->whereNot('status_booking', 'finished')->get();
-        $bookingAdmin = BookingRoom::with('room')->get();
+        $bookingAdmin = BookingRoom::with('room')->where('company_id', $companyId)->get();
         // $myEventsAdmin = BookingRoom::with('room')->whereNot('status_booking', 'finished')->get();
         $myEventsAdmin =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
             $q->where('email', $emailUser);
-        })->with(['room', 'participant'])->whereNot('status_booking', 'finished')->get();
+        })->with(['room', 'participant'])->whereNot('status_booking', 'finished')->where('company_id', $companyId)->get();
 
 
 
@@ -117,9 +119,32 @@ class UserDashboardController extends Controller
         //
     }
 
+    public function guestAccess(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $guestAccess = $request->guest_access;
+        $checkKeyAccess = Company::where('guest_access', $guestAccess)->first();
+
+
+        if ($checkKeyAccess != null) {
+            $companyId = $checkKeyAccess->id;
+            $updateCompany = User::find($userId);
+            $updateCompany->company_id = $companyId;
+            $updateCompany->save();
+        } else {
+            return response()->json([
+                'message' => 'invalid access code',
+                'code' => 500,
+                'error' => true,
+            ], 500);
+        }
+    }
+
+
 
     public function profile()
     {
+
         return view('user.profile.index');
     }
 

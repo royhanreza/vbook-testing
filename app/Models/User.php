@@ -61,4 +61,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(BookingRoom::class, 'user_id');
     }
+
+    public function licence()
+    {
+        return $this->belongsTo(Licence::class, 'licence_id');
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id');
+    }
 }

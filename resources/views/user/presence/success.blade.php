@@ -19,7 +19,7 @@
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
                 <!--begin::Logo-->
-                <a href="../../demo4/dist/index.html" class="mb-12">
+                <a href="#" class="mb-12">
                     <img alt="Logo" src="{{ asset('gambar/logo-vbook.png') }}" class="h-40px" />
                 </a>
                 <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">

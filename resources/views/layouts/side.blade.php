@@ -46,6 +46,26 @@
             </div>
 
             <div class="menu-item">
+                <a class="menu-link" href="/admin/manage-division">
+                    <span class="menu-link menu-center" title="Manage Division" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-person-lines-fill fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="/admin/manage-receptionist">
+                    <span class="menu-link menu-center" title="Manage Receptionist" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-receipt-cutoff fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
                 <a class="menu-link" href="/admin/report">
                     <span class="menu-link menu-center" title="List Report Booking" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
@@ -55,7 +75,9 @@
                 </a>
             </div>
 
-            <div class="menu-item">
+
+
+            <!-- <div class="menu-item">
                 <a class="menu-link" href="/admin/device">
                     <span class="menu-link menu-center" title="Device" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
@@ -64,7 +86,7 @@
                         </span>
                     </span>
                 </a>
-            </div>
+            </div> -->
 
 
             <div class="menu-item">
@@ -95,7 +117,7 @@
 
             @if (auth()->user()->role_id == 1)
             <div class="menu-item">
-                <a class="menu-link" href="/suadmin">
+                <a class="menu-link" href="/receptionist">
                     <span class="menu-link menu-center" title="Dashboards" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
                             <i class="bi bi-bar-chart-line fs-2"></i>
@@ -105,9 +127,20 @@
             </div>
             <div class="menu-item">
                 <a class="menu-link" href="{{ route('manage-company.index')}}">
-                    <span class="menu-link menu-center" title="Manage User" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <span class="menu-link menu-center" title="Manage Company" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
                             <i class="bi bi-person-video2 fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="/suadmin/device">
+                    <span class="menu-link menu-center" title="Device" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-tv fs-2"></i>
+
                         </span>
                     </span>
                 </a>
@@ -123,6 +156,7 @@
                 </a>
             </div> -->
 
+
             <div class="menu-item">
                 <a class="menu-link" href="{{ route('superadmin-setting.index')}}">
                     <span class="menu-link menu-center" title="Setting" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
@@ -132,6 +166,31 @@
                     </span>
                 </a>
             </div>
+
+
+            @endif
+
+
+            @if (auth()->user()->role_id == 5)
+            <div class="menu-item">
+                <a class="menu-link" href="/receptionist">
+                    <span class="menu-link menu-center" title="Dashboards" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-bar-chart-line fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('manage-guest.index')}}">
+                    <span class="menu-link menu-center" title="Manage guest" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-person-video2 fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+
 
 
             @endif

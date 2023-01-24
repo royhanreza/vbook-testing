@@ -15,7 +15,7 @@ class DashboardSuperadminController extends Controller
      */
     public function index()
     {
-        $countCompany = User::where('role_id', 1)->count();
+        $countCompany = User::where('role_id', 2)->count();
         return view('superadmin.dashboard.index', [
             'count_company' => $countCompany,
         ]);

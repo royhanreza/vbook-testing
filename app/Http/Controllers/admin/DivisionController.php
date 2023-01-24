@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Device;
+use App\Models\Division;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class DeviceController extends Controller
+class DivisionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +18,16 @@ class DeviceController extends Controller
      */
     public function index()
     {
+        // $division = Division::with('user')->get();
 
+        // $division = Division::with('user')->whereHas('user', function ($q) {
+        //     $q->withCount('id');
+        // })->get();
         $companyId = Auth::user()->company_id;
-        $devices = Device::where('company_id', $companyId)->get();
-        // return $room;
-        return view('admin.manage-device.index', [
-            'devices' => $devices,
+        $division = Division::withCount('user')->where('company_id', $companyId)->get();
+        // return $division;
+        return view('admin.manage-division.index', [
+            'division' => $division,
         ]);
     }
 
@@ -47,10 +51,10 @@ class DeviceController extends Controller
     {
         try {
 
-            $newDevice = new Device();
-            $newDevice->name = $request->name;
-            $newDevice->company_id = Auth::user()->company_id;
-            $newDevice->save();
+            $newDivision = new Division();
+            $newDivision->name = $request->name;
+            $newDivision->company_id = Auth::user()->company_id;
+            $newDivision->save();
 
             DB::commit();
             return response()->json([

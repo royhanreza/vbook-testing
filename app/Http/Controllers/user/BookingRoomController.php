@@ -118,6 +118,7 @@ class BookingRoomController extends Controller
                 $newBooking = new BookingRoom();
                 $newBooking->title = $request->title;
                 $newBooking->user_id = Auth::user()->id;
+                $newBooking->company_id = Auth::user()->company_id;
                 $newBooking->room_id = $request->room_id;
                 $newBooking->department = $request->department;
                 $newBooking->status = 1;

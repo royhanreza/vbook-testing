@@ -11,6 +11,13 @@ class Device extends Model
 
     public function room()
     {
-        return $this->hasMany(Room::class , 'device_id');
+        return $this->hasMany(Room::class, 'device_id');
+    }
+
+
+
+    public function deviceCompany()
+    {
+        return $this->hasMany(CompanyDevice::class, 'device_id');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Exports\Booking;
 use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -24,7 +25,8 @@ class ReportBookingController extends Controller
         $status = $request->query('status');
         $start_date = $request->query('start_date');
 
-        $bookingQuery = BookingRoom::with(['participant', 'user', 'room']);
+        $companyId = Auth::user()->company_id;
+        $bookingQuery = BookingRoom::with(['participant', 'user', 'room'])->where('company_id', $companyId);
 
 
         if ($room !== null) {

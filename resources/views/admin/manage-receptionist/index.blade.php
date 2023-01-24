@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard | Manage Device')
+@section('title', 'Dashboard | Manage Receptionist')
 
 @section('prehead')
 <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -14,13 +14,12 @@
 <div id="app" v-cloak>
 
 
-
     <div class="modal fade" tabindex="-1" id="kt_modal_edit">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form @submit.prevent="submitFormEdit" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Device</h5>
+                        <h5 class="modal-title">Edit Receptionist</h5>
 
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -32,33 +31,49 @@
                     <div class="modal-body">
 
 
+
                         <div class="row g-3 align-items-center mb-4">
                             <div class="col-sm-3">
-                                <label for="" class="form-label form-label-sm">Device Name </label>
+                                <label for="" class="form-label form-label-sm">Nama</label>
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="deviceDetail.name" class="form-control mb-2" placeholder="Device Name" />
+                                <input type="text" v-model="userDetail.name" class="form-control mb-2" placeholder="Nama" />
                             </div>
                         </div>
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">Email</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <input type="text" v-model="userDetail.email" class="form-control mb-2" placeholder="Email" />
+                            </div>
+                        </div>
+
 
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" id="kt_modal_create">
+
+    <div class="modal fade" tabindex="-1" id="kt_modal_1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form @submit.prevent="submitForm" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title">Create Device</h5>
+                        <h5 class="modal-title">Detail Receptionist</h5>
 
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -70,21 +85,36 @@
                     <div class="modal-body">
 
 
+
                         <div class="row g-3 align-items-center mb-4">
                             <div class="col-sm-3">
-                                <label for="" class="form-label form-label-sm">Device Name </label>
+                                <label for="" class="form-label form-label-sm">Name</label>
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="name" class="form-control mb-2" placeholder="Device Name" />
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.name }}</span>
                             </div>
                         </div>
+
+
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">Email</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.email }}</span>
+                            </div>
+                        </div>
+
+
 
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                     </div>
                 </form>
             </div>
@@ -106,14 +136,13 @@
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                 </svg>
                             </span>
-                            <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari" />
+                            <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search" />
                         </div>
                         <!--end::Search-->
                     </div>
-
                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
 
-                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create">Create Device</a>
+                        <a href="/admin/manage-receptionist/create" class="btn btn-primary">Create Receptionist</a>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -128,42 +157,52 @@
                             <!--begin::Table row-->
                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                 <th class="text-center min-w-20px">No</th>
-                                <th class="text-center min-w-100px">Device</th>
+                                <th class="text-center min-w-100px">Name</th>
+                                <th class="text-center min-w-100px">Email</th>
                                 <th class="text-center min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
                         </thead>
                         <tbody class="fw-bold text-gray-600">
                             <!--begin::Table row-->
-                            <tr v-for="(devices, index) in device">
+                            <tr v-for="(users, index) in user">
 
-
-                                <td class="text-center pe-0">
-                                    <span class="fw-bolder text-dark">@{{ index + 1 }}</span>
-                                </td>
-
-
-
-                                <td class="text-center pe-0">
-                                    <span class="fw-bolder text-dark">@{{ devices.name }}</span>
-                                </td>
-
-
-                                <!--begin::Action=-->
                                 <td class="text-center">
-                                    <a href="#" class="btn btn-sm btn-secondary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                    <span class="fw-bolder ms-3">@{{ index +1 }}</span>
+                                </td>
+
+
+                                <td class="text-center">
+                                    <div class="ms-5">
+                                        <!--begin::Title-->
+                                        <a href="#" @click="onSelcected(users.id)" data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="text-gray-800 text-hover-primary fs-5 fw-bolder" data-kt-ecommerce-product-filter="product_name">@{{ users.name }}</a>
+                                        <!--end::Title-->
+                                    </div>
+
+                                </td>
+                                <td class="text-center">
+                                    <span class="fw-bolder ms-3">@{{ users.email }}</span>
+                                </td>
+
+
+                                <!--begin::Status=-->
+
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </a>
                                     <!--begin::Menu-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="#" @click="onSelcected(rooms.id)" data-bs-toggle="modal" data-bs-target="#kt_modal_edit" class="menu-link px-3">Edit</a>
+                                            <a href="#" @click="onSelcected(users.id)" data-bs-toggle="modal" data-bs-target="#kt_modal_edit" class="menu-link px-3" v-if="users.role_id == 3 || users.role_id == 4">Edit</a>
+                                            <span v-if="users.role_id == 1 || users.role_id == 2">Tidak Bisa Action Di role ini</span>
+
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3" @click.prevent="deleteRecord(rooms.id)">Delete</a>
+                                            <a href="#" class="menu-link px-3" data-kt-ecommerce-product-filter="delete_row" @click.prevent="deleteRecord(users.id)" v-if="users.role_id == 3 || users.role_id == 4">Delete</a>
                                         </div>
                                         <!--end::Menu item-->
                                     </div>
@@ -187,6 +226,7 @@
 @endsection
 @section('script')
 <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+
 @endsection
 
 @section('pagescript')
@@ -221,7 +261,7 @@
 
         // Hook export buttons
         var exportButtons = () => {
-            const documentTitle = 'Data Device';
+            const documentTitle = 'Data Lowongan Kerja';
             var buttons = new $.fn.dataTable.Buttons(table, {
                 buttons: [{
                         extend: 'copyHtml5',
@@ -287,79 +327,45 @@
     });
 </script>
 
-
 <script>
-    const device = <?php echo Illuminate\Support\Js::from($devices) ?>;
+    const user = <?php echo Illuminate\Support\Js::from($user) ?>;
     let app = new Vue({
         el: '#app',
         data: {
-            device,
-            name: '',
-            deviceDetail: [],
+            user,
+            userDetail: [],
 
             loading: false,
         },
         methods: {
             onSelcected: function(id) {
-                this.deviceDetail = this.device.filter((item) => {
+                this.userDetail = this.user.filter((item) => {
                     return item.id == id;
                 })[0]
 
             },
-            submitForm: function() {
-                this.sendData();
-            },
             submitFormEdit: function() {
-                this.sendDataEdit();
+                this.sendData();
             },
             sendData: function() {
                 let vm = this;
                 vm.loading = true;
-                axios.post('/admin/device', {
-                        name: this.name,
-
+                axios.post('/admin/manage-user/' + this.userDetail['id'] + '/edit', {
+                        name: this.userDetail['name'],
+                        email: this.userDetail['email'],
+                        role_id: this.userDetail['role_id'],
+                        no_telp: this.userDetail['no_telp'],
                     })
                     .then(function(response) {
                         vm.loading = false;
                         Swal.fire({
                             title: 'Berhasil',
-                            text: 'Device berhasil Disimpan.',
+                            text: 'User berhasil di update.',
                             icon: 'success',
                             allowOutsideClick: false,
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = '/admin/device';
-                            }
-                        })
-                        // console.log(response);
-                    })
-                    .catch(function(error) {
-                        vm.loading = false;
-                        console.log(error);
-                        Swal.fire(
-                            'Terjadi Kesalahan!',
-                            'Pastikan data terisi dengan benar.',
-                            'error'
-                        )
-                    });
-            },
-            sendDataEdit: function() {
-                let vm = this;
-                vm.loading = true;
-                axios.post('/admin/device/' + this.deviceDetail['id'] + '/edit', {
-                        name: this.deviceDetail['name'],
-
-                    })
-                    .then(function(response) {
-                        vm.loading = false;
-                        Swal.fire({
-                            title: 'Berhasil',
-                            text: 'Device berhasil diupdate.',
-                            icon: 'success',
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = '/admin/device';
+                                window.location.href = '/admin/manage-user';
                             }
                         })
                         // console.log(response);
@@ -387,7 +393,7 @@
                     cancelButtonText: 'Cancel',
                     showLoaderOnConfirm: true,
                     preConfirm: () => {
-                        return axios.delete('/admin/manage-room/' + id)
+                        return axios.delete('/admin/manage-user/' + id)
                             .then(function(response) {
                                 console.log(response.data);
                             })
@@ -406,7 +412,7 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: 'Room Berhasil Dihapus',
+                            text: 'User Berhasil Dihapus',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location.reload();

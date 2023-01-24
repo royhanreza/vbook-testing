@@ -213,7 +213,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="card-body pt-0">
                                                 <div class="mb-2 fv-row">
                                                     <label class="required form-label">INPUT COMPANY ACCESS</label>
-                                                    <input type="text" v-model="department" class="form-control mb-2" placeholder="Key Company access" />
+                                                    <input type="text" v-model="guestAccess" class="form-control mb-2" placeholder="Key Company access" />
                                                 </div>
 
                                             </div>
@@ -293,7 +293,7 @@ License: For each use you must have a valid license purchased only from above li
         let app = new Vue({
             el: '#app',
             data: {
-                title: '',
+                guestAccess: '',
                 loading: false,
             },
             methods: {
@@ -304,27 +304,23 @@ License: For each use you must have a valid license purchased only from above li
                 sendData: function() {
                     let vm = this;
                     vm.loading = true;
-                    axios.post('/booking', {
-                            title: this.title,
-                            department: this.department,
-                            description: this.description,
-                            start_date: this.start_date,
-                            end_date: this.end_date,
-                            room_id: this.roomId,
-                            // participant: JSON.stringify(this.participant),
-                            participant: this.participant,
+                    axios.post('/user/guest', {
+                            guest_access: this.guestAccess,
+
                         })
                         .then(function(response) {
                             vm.loading = false;
                             Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Booking berhasil disimpan.',
+                                title: 'Success',
+                                text: 'Guest Access VALID.',
                                 icon: 'success',
                                 showConfirmButton: false,
                             })
                             setTimeout(function() {
-                                window.location.href = '/booking';
+                                window.location.href = '/booking/search';
                             }, 2000);
+
+
                             // Swal.fire({
                             //     title: 'Berhasil',
                             //     text: 'Booking berhasil disimpan.',
@@ -341,7 +337,7 @@ License: For each use you must have a valid license purchased only from above li
                             vm.loading = false;
                             console.log(error);
                             Swal.fire({
-                                title: 'Gagal Menyimpan',
+                                title: 'error',
                                 error: true,
                                 icon: 'error',
                                 text: error.response.data.message,

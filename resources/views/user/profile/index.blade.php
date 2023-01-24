@@ -169,6 +169,7 @@
                                         <div class="separator my-2"></div>
                                         <div class="menu-item px-5">
                                             <a href="/user/profile" class="menu-link px-5">My Profile</a>
+                                            <a href="/user/logout" class="menu-link px-5">Logout</a>
                                         </div>
                                     </div>
                                     @endif
@@ -215,10 +216,31 @@
                                             <td>: &nbsp; <b>{{ auth()->user()->email }}</b></td>
                                         </tr>
 
+
+                                        @if(auth()->user()->company_id !=null)
                                         <tr>
-                                            <td style="width: 50%;">Nama</td>
-                                            <td>: &nbsp; <b>{{ auth()->user()->no_telp ?? '-' }}</b></td>
+                                            <td style="width: 50%;">Company</td>
+                                            <td>: &nbsp; <b>{{ auth()->user()->company->name ?? '-' }}</b></td>
                                         </tr>
+                                        @else
+                                        <tr>
+                                            <td style="width: 50%;">Company</td>
+                                            <td>: &nbsp; <b>guest</b></td>
+                                        </tr>
+                                        @endif
+
+                                        @if(auth()->user()->division_id !=null)
+                                        <tr>
+                                            <td style="width: 50%;">Division</td>
+                                            <td>: &nbsp; <b>{{ auth()->user()->division->name ?? '-' }}</b></td>
+                                        </tr>
+                                        @else
+                                        <tr>
+                                            <td style="width: 50%;">Division</td>
+                                            <td>: &nbsp; <b>-</b></td>
+                                        </tr>
+                                        @endif
+
                                     </table>
 
 

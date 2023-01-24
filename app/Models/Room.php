@@ -13,19 +13,21 @@ class Room extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class , 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function device()
     {
-        return $this->belongsTo(Device::class , 'device_id');
+        return $this->belongsTo(Device::class, 'device_id');
     }
 
     public function bookingRoom()
     {
-        return $this->hasMany(BookingRoom::class , 'room_id');
+        return $this->hasMany(BookingRoom::class, 'room_id');
     }
 
-
-
+    public function roomRestrict()
+    {
+        return $this->hasMany(roomRestrict::class, 'room_id');
+    }
 }

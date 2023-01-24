@@ -13,4 +13,8 @@ class Company extends Model
     {
         return $this->hasMany(User::class, 'company_id');
     }
+    public function deviceCompany()
+    {
+        return $this->hasMany(CompanyDevice::class, 'company_id');
+    }
 }

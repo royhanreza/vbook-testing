@@ -26,7 +26,6 @@
     <div class="d-flex flex-column flex-root">
         <!--begin::Authentication - Two-stes -->
         <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed">
-
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
                 <!--begin::Logo-->
@@ -75,12 +74,12 @@
                             <!--end::Label-->
                             <!--begin::Input group-->
                             <div class="d-flex flex-wrap flex-stack">
-                                <input type="text" id="n0" name="pin1" data-inputmask="'mask': '9', 'placeholder': ''" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="1" value="" />
-                                <input type="text" id="n1" name="pin2" data-inputmask="'mask': '9', 'placeholder': ''" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="2" value="" />
-                                <input type="text" id="n2" name="pin3" data-inputmask="'mask': '9', 'placeholder': ''" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="3" value="" />
-                                <input type="text" id="n3" name="pin4" data-inputmask="'mask': '9', 'placeholder': ''" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="4" value="" />
-                                <input type="text" id="n4" name="pin5" data-inputmask="'mask': '9', 'placeholder': ''" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="5" value="" />
-                                <input type="text" id="n5" name="pin6" data-inputmask="'mask': '9', 'placeholder': ''" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" value="" />
+                                <input type="text" id="n0" name="pin1" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="1" value="" />
+                                <input type="text" id="n1" name="pin2" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="2" value="" />
+                                <input type="text" id="n2" name="pin3" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="3" value="" />
+                                <input type="text" id="n3" name="pin4" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="4" value="" />
+                                <input type="text" id="n4" name="pin5" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" autocomplete="off" autofocus data-next="5" value="" />
+                                <input type="text" id="n5" name="pin6" maxlength="1" class="inputs form-control form-control-solid h-60px w-60px fs-2qx text-center border-primary border-hover mx-1 my-2" value="" />
                             </div>
 
                             <!--begin::Input group-->
@@ -170,7 +169,7 @@
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ asset('assets/js/custom/authentication/sign-in/two-steps.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/custom/authentication/sign-in/two-steps.js') }}"></script> -->
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@next"></script>

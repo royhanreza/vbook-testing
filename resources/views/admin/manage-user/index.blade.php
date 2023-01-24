@@ -109,6 +109,16 @@
 
                         <div class="row g-3 align-items-center mb-4">
                             <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">Division</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.division?.name }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
                                 <label for="" class="form-label form-label-sm">Email</label>
                             </div>
 

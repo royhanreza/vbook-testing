@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CompanyDevice;
 use App\Models\Device;
+use App\Models\Division;
 use App\Models\Room;
+use App\Models\RoomRestrict;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,11 +24,13 @@ class ManageRoomController extends Controller
      */
     public function index()
     {
-        $room = Room::with('user', 'device')->get();
-
-        // return $room;
+        $companyId = Auth::user()->company_id;
+        $room = Room::with('user', 'device')->where('company_id', $companyId)->get();
+        $user = User::with('room')->where('role_id', 4)->where('company_id', $companyId)->get();
+        // return $user;
         return view('admin.manage-room.index', [
             'room' => $room,
+            'user' => $user,
         ]);
     }
 
@@ -37,9 +42,12 @@ class ManageRoomController extends Controller
     public function create()
     {
         $companyId = Auth::user()->company_id;
-        $device = Device::where('company_id', $companyId)->get();
+        $device = CompanyDevice::with('device', 'company')->where('company_id', $companyId)->get();
+        $division = Division::where('company_id', $companyId)->get();
+        // return $device;
         return view('admin.manage-room.create', [
             'device' => $device,
+            'division' => $division,
         ]);
     }
 
@@ -53,13 +61,14 @@ class ManageRoomController extends Controller
     {
 
         try {
-            // generate a pin based on 2 * 7 digits + a random character
+            // generate a pin based on 6 a random character
             $random = mt_rand(100000, 999999);
 
             // shuffle the result
             $pin = str_shuffle($random);
             $newUser = new User();
             $newUser->name = $request->name;
+            $newUser->company_id = Auth::user()->company_id;
             $newUser->email = str_replace(' ', '-', $request->name) . '@gmail.com';
             $newUser->username = str_replace(' ', '-', $request->name) . '@gmail.com';
             // return response()->json([
@@ -84,7 +93,21 @@ class ManageRoomController extends Controller
             $newRoom->color_code = $request->color_code;
             $newRoom->ip_address = $request->ip_address;
             $newRoom->device_id = $request->device_id;
+            $restrict = $request->isRestricionRoom;
+            if ($restrict == 1) {
+                $newRoom->restrict_room = 'yes';
+            }
             $newRoom->save();
+
+            $division = $request->divisionId;
+            foreach ($division as $divisions) {
+                $newRoomestrict = new RoomRestrict();
+                $newRoomestrict->room_id = $newRoom->id;
+                $newRoomestrict->company_id = Auth::user()->company_id;
+                $newRoomestrict->division_id = $divisions;
+                $newRoomestrict->save();
+            }
+
 
             DB::commit();
             return response()->json([
@@ -92,13 +115,11 @@ class ManageRoomController extends Controller
                 'code' => 200,
                 'error' => false,
             ]);
-        } catch (Exception $e) {
-            DB::rollback();
+        } catch (\Throwable $e) {
+            DB::rollBack();
             return response()->json([
-                'message' => 'Internal error',
-                'code' => 500,
-                'error' => true,
-                'errors' => $e,
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
             ], 500);
         }
     }

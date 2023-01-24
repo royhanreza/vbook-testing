@@ -19,7 +19,7 @@
             <div class="modal-content">
                 <form @submit.prevent="submitFormEdit" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit User</h5>
+                        <h5 class="modal-title">Edit Company</h5>
 
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -84,7 +84,7 @@
             <div class="modal-content">
                 <form @submit.prevent="submitForm" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title">Detail User</h5>
+                        <h5 class="modal-title">Detail Company</h5>
 
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -103,7 +103,17 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.name }}</span>
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail?.name }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">License Key </label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail?.licence?.code }}</span>
                             </div>
                         </div>
 
@@ -113,7 +123,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.company?.aplication_name }}</span>
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail?.company?.aplication_name }}</span>
                             </div>
                         </div>
 
@@ -123,7 +133,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.email }}</span>
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail?.email }}</span>
                             </div>
                         </div>
 
@@ -135,7 +145,27 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail.no_telp }}</span>
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail?.no_telp }}</span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">Key Guest Access</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ userDetail?.company?.guest_access }}</span>
+                            </div>
+                        </div> -->
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">Logo</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span class="fw-bolder text-dark">: &nbsp; <img :src="`/gambar/company/`+userDetail?.company?.logo" alt="" width="120px"> </span>
                             </div>
                         </div>
 
@@ -434,7 +464,7 @@
                     cancelButtonText: 'Cancel',
                     showLoaderOnConfirm: true,
                     preConfirm: () => {
-                        return axios.delete('/admin/manage-user/' + id)
+                        return axios.delete('/suadmin/manage-company/' + id)
                             .then(function(response) {
                                 console.log(response.data);
                             })

@@ -41,6 +41,15 @@
                                 </div>
 
                                 <div class="mb-10 fv-row">
+                                    <label class="required form-label">Division</label>
+                                    <select class="form-select mb-2" v-model="divisionId">
+                                        <option value="0">- SELECT DIVISION -</option>
+                                        <option v-for="divisions in division" :value="divisions.id">@{{ divisions.name }}</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="mb-10 fv-row">
                                     <label class="required form-label">Email</label>
                                     <input type="text" v-model="email" class="form-control mb-2" placeholder="Email" value="" />
                                 </div>
@@ -103,14 +112,17 @@
 
 @section('pagescript')
 <script>
+    const division = <?php echo Illuminate\Support\Js::from($division) ?>;
     let app = new Vue({
         el: '#app',
         data: {
+            division,
             name: '',
             email: '',
             password: '',
             noHp: '',
             roleId: '0',
+            divisionId: '0',
             loading: false,
         },
         methods: {
@@ -126,6 +138,7 @@
                         password: this.password,
                         no_telp: this.noHp,
                         role_id: this.roleId,
+                        division_id: this.divisionId,
 
                     })
                     .then(function(response) {

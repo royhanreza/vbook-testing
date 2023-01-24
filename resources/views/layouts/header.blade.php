@@ -105,10 +105,10 @@
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
-                                    <div class="fw-bolder d-flex align-items-center fs-5">Admin
-                                        <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span>
+                                    <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
+
                                     </div>
-                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-7">admin@gmail.com</a>
+                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
                                 </div>
                                 <!--end::Username-->
                             </div>
@@ -124,6 +124,8 @@
 
                             @if (auth()->user()->role_id == 1)
                             <a href="{{ route('suadmin.logout') }}" class="menu-link px-5">Sign Out</a>
+                            @elseif (auth()->user()->role_id == 5)
+                            <a href="{{ route('receptionist.logout') }}" class="menu-link px-5">Sign Out</a>
                             @else
                             <a href="/admin/logout" class="menu-link px-5">Sign Out</a>
                             @endif

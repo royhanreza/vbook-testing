@@ -8,7 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -329,7 +329,7 @@
                         <form id="logout-form" action="{{ route('room.logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                        @if (auth()->user()->room->device_id == 1)
+                        @if ($device->device->use_came == 'YES')
                         <a href="/scan" class="btn btn-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-qr-code-scan mr-2" viewBox="0 0 16 16">
                                 <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0v-3Zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5ZM.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5Zm15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5ZM4 4h1v1H4V4Z" />
@@ -387,6 +387,7 @@
                     <div class="style-after-upcoming">
                         <h2 class="text-white text-center font-weight-normal">Today's Event</h2>
                         <div style="overflow: auto; height: 37vh;">
+
                             <div v-if="bookingTodays.length > 0">
 
                                 <p v-if="bookingOngoing.length < 1" id="rcorners1" class="text-white h6" v-for="BookToday in bookingTodays"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
@@ -440,19 +441,12 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script> -->
 
 
     <!-- <script>
         setInterval(function() {
             window.location.reload();
         }, 30000);
-    </script> -->
-
-    <!-- <script type="text/javascript">
-        moment.locale('id');
-        var cTime = moment().format('MMMM Do YYYY, h:mm:ss a');
-        console.log(cTime);
     </script> -->
 
     <script>
@@ -473,7 +467,7 @@
                     this.bookingOnGoing();
                     this.bookingToday();
 
-                }, 5000);
+                }, 1000);
 
                 // if (localStorage.getItem('reloaded')) {
                 //     localStorage.removeItem('reloaded');
@@ -486,14 +480,23 @@
             methods: {
                 bookingOnGoing: function() {
                     let vm = this;
-                    var ipVbook1 = 'http://{{ $ip_address->ip_address }}:8080';
-                    axios.get('{{ route("room.api-display") }}').then(res => {
+
+                    axios.get('http://127.0.0.1:8000/api-display', {
+                        headers: {
+                            'Accept': 'application/json',
+                        },
+                    }).then(res => {
+                        var ipVbook1 = 'http://{{ $ip_address->ip_address }}:8080';
                         vm.bookingOngoing = res.data.bookingOngoing;
                         if (vm.bookingOngoing.length < 1) {
                             vm.bookingNull = 'Tidak ada meeting yang berlangsung';
-                        } else {
+                        }
+                        if (vm.bookingOngoing.length > 0) {
                             if (vm.bookingOngoing[0].reload == 1) {
                                 // window.location.reload();
+
+
+
                                 axios.post(`${ipVbook1}/v1/oauth2/token/`, {
                                         grant_type: "password",
                                         username: "admin",
@@ -536,6 +539,7 @@
                                         console.log(`Error oauth2 token : ${err}`);
                                     });
 
+
                                 axios.post('/room/post-reload', {
                                         booking_id: this.bookingOngoing[0].id,
 
@@ -548,13 +552,15 @@
 
                                     });
 
+
+
                             }
                         }
                     })
                 },
                 bookingToday: function() {
                     let vm = this;
-                    axios.get('{{ route("room.api-display") }}').then(res => {
+                    axios.get('http://127.0.0.1:8000/api-display').then(res => {
                         vm.bookingTodays = res.data.getBookingToday;
                         if (vm.bookingTodays.length < 1) {
                             vm.bookingTodaysNull = 'Tidak ada event untuk hari ini';
@@ -586,7 +592,6 @@
     </script>
 
     <script>
-        var ipVbook = '{{ $ip_address->ip_address }}:8080';
         var countDownDate = new Date("{!! $end_date !!}").getTime();
         var x = setInterval(function() {
 
@@ -605,57 +610,54 @@
                 clearInterval(x);
                 document.getElementById("getCountdown").innerHTML = "MEETING SELESAI";
 
-                setInterval(function() {
 
-                    axios.post(`${ipVbook}/v1/oauth2/token/`, {
-                            grant_type: "password",
-                            username: "admin",
-                            password: "12345678"
-                        })
-                        .then((res) => {
-                            let token = res.data.access_token;
+                var ipVbook = 'http://{{ $ip_address->ip_address }}:8080';
+                axios.post(`${ipVbook}/v1/oauth2/token/`, {
+                        grant_type: "password",
+                        username: "admin",
+                        password: "12345678"
+                    })
+                    .then((res) => {
+                        let token = res.data.access_token;
 
-                            const config = {
-                                headers: {
-                                    Authorization: `Bearer ${token}`
-                                }
-                            };
+                        const config = {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        };
 
-                            var paramsBody;
+                        var paramsBody;
 
-                            paramsBody = {
-                                "red": 255,
-                                "green": 0,
-                                "blue": 0,
-                            };
-                            axios.post(`${ipVbook}/v1/led/front_led/`,
-                                    paramsBody, config)
-                                .then((res) => {
-                                    console.log(res)
-                                })
-                                .catch((err) => {
-                                    console.log(`Error front led : ${err}`);
-                                })
-                            axios.post(`${ipVbook}/v1/led/side_led/`,
-                                    paramsBody, config)
-                                .then((res) => {
-                                    // setInterval(function() {
-                                    //     window.location.reload();
-                                    // }, 40000);
-                                })
-                                .catch((err) => {
-                                    console.log(`Error side led : ${err}`);
-                                })
-                        })
-                        .catch((err) => {
-                            console.log(`Error oauth2 token : ${err}`);
-                        });
+                        paramsBody = {
+                            "red": 0,
+                            "green": 255,
+                            "blue": 0,
+                        };
+                        axios.post(`${ipVbook}/v1/led/front_led/`,
+                                paramsBody, config)
+                            .then((res) => {
+                                console.log(res)
+                            })
+                            .catch((err) => {
+                                console.log(`Error front led : ${err}`);
+                            })
+                        axios.post(`${ipVbook}/v1/led/side_led/`,
+                                paramsBody, config)
+                            .then((res) => {
+                                setInterval(function() {
+                                    window.location.reload();
+                                }, 4000);
+                            })
+                            .catch((err) => {
+                                console.log(`Error side led : ${err}`);
+                            })
+                    })
+                    .catch((err) => {
+                        console.log(`Error oauth2 token : ${err}`);
+                    });
 
-                }, 1000);
 
-                // setInterval(function() {
-                //     window.location.reload();
-                // }, 90000);
+
             }
         }, 1000);
     </script>

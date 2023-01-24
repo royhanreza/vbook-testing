@@ -422,7 +422,97 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                @foreach ($room_restrict as $room_restricts)
+                                                <div class="col-md-6 col-xl-6">
+                                                    <!--begin::Card-->
+                                                    <a href="/booking/{{ $room_restricts->id }}/create" class="card border-hover-primary mb-6">
+                                                        <!--begin::Card header-->
+                                                        <div class="card-header ribbon ribbon-top border-0 pt-9">
 
+                                                            <div class="ribbon-label bg-dark">
+                                                                <span class="svg-icon align-middle">
+                                                                    <span class="badge badge-pill badge-warning">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-star" viewBox="0 0 16 16">
+                                                                            <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.178.178 0 0 0 .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.178.178 0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.178.178 0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.178.178 0 0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.178.178 0 0 0 .134-.098L7.84 4.1z" />
+                                                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                                                                        </svg>
+                                                                    </span>
+
+                                                                </span>
+
+                                                                &nbsp; Special Room
+                                                            </div>
+                                                            <!--begin::Card Title-->
+                                                            <div class="card-title m-0">
+                                                                <!--begin::Avatar-->
+                                                                <div class="d-flex align-items-center">
+
+                                                                    <div class="symbol symbol-100px w-100px bg-light">
+                                                                        <img alt="Logo " src="{{ asset('assets/booking-room/asset_all_new/room.png') }}" alt="image" class="p-3" loading="lazy">
+
+                                                                    </div>
+                                                                    <div class="ps-3">
+                                                                        <div class="fs-3 fw-bolder text-dark">{{ $room_restricts->name }}</div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                            </div>
+
+                                                            <div class="card-toolbar">
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="card-body px-9 pb-9">
+
+
+
+                                                            <div>
+                                                                <div class="d-flex flex-stack">
+                                                                    <div class="text-gray-600 fw-bold me-2">FLOOR</div>
+                                                                    <span class="text-white fw-bold"> <span class="badge badge-pill badge-dark">{{ $room_restricts->floor }}</span> </span>
+                                                                </div>
+                                                                <div class="separator separator-dashed my-3"></div>
+                                                                <div class="d-flex flex-stack">
+                                                                    <div class="text-gray-600 fw-bold me-2">CAPACITY</div>
+                                                                    <span class="text-white fw-bold"> <span class="badge badge-pill badge-secondary">{{ $room_restricts->capacity }}</span> </span>
+                                                                </div>
+                                                                <div class="separator separator-dashed my-3"></div>
+                                                                <div class="d-flex flex-stack">
+                                                                    <div class="text-gray-600 fw-bold me-2">PROJECTOR</div>
+                                                                    <span class="text-white fw-bold">
+                                                                        @if ($room_restricts->projector == 1)
+                                                                        <span class="badge" style="background:#03fc24;"> <i class="bi bi-check-circle"></i></span>
+                                                                        @else
+                                                                        <span class="badge badge-danger"><i class="bi bi-x-circle"></i></span>
+                                                                        @endif
+                                                                    </span>
+                                                                </div>
+                                                                <div class="separator separator-dashed my-3"></div>
+                                                                <div class="d-flex flex-stack">
+                                                                    <div class="text-gray-600 fw-bold me-2">INTERNET</div>
+                                                                    <span class="text-white fw-bold">
+                                                                        @if ($room_restricts->internet == 1)
+                                                                        <span class="badge" style="background:#03fc24;"> <i class="bi bi-check-circle"></i></span>
+                                                                        @else
+                                                                        <span class="badge badge-danger"> <i class="bi bi-x-circle"></i></span>
+                                                                        @endif
+
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+
+                                                    </a>
+
+                                                </div>
+                                                @endforeach
                                                 @foreach ($rooms as $room)
                                                 <div class="col-md-6 col-xl-6">
                                                     <!--begin::Card-->

@@ -36,13 +36,13 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="mb-10 fv-row">
-                                    <label class="required form-label">Name</label>
-                                    <input type="text" v-model="name" class="form-control mb-2" placeholder="Nama" />
+                                    <label class="required form-label">Company Name</label>
+                                    <input type="text" v-model="name" class="form-control mb-2" placeholder="Company Name" />
                                 </div>
 
                                 <div class="mb-10 fv-row">
                                     <label class="required form-label">Aplication Name</label>
-                                    <input type="text" v-model="aplicationName" class="form-control mb-2" placeholder="Email" value="" />
+                                    <input type="text" v-model="aplicationName" class="form-control mb-2" placeholder="aplication name" value="" />
                                 </div>
 
                                 <div class="mb-10 fv-row">
@@ -59,7 +59,19 @@
 
                                 <div class="mb-10 fv-row">
                                     <label class="required form-label">No Handphone</label>
-                                    <input type="text" v-model="noHp" class="form-control mb-2" placeholder="No Telepon" value="" />
+                                    <input type="text" v-model="noHp" class="form-control mb-2" placeholder="No Handphone" value="" />
+                                </div>
+
+                                <div class="mb-10 fv-row">
+                                    <label class="required form-label">Device</label>
+                                    <select multiple class="form-control form-control-sm" id="selectEvents">
+                                        @foreach ($device as $devices)
+                                        <option value="{{ $devices->id }}">{{$devices->name}}</option>
+                                        @endforeach
+
+                                    </select>
+
+
                                 </div>
 
                                 <div class="row">
@@ -122,9 +134,12 @@
 
 @section('pagescript')
 <script>
+    const device = <?php echo Illuminate\Support\Js::from($device) ?>;
     let app = new Vue({
         el: '#app',
         data: {
+            device,
+            deviceId: [],
             name: '',
             logo: '',
             aplicationName: '',
@@ -151,6 +166,8 @@
                     email: this.email,
                     password: this.password,
                     no_telp: this.noHp,
+                    // deviceId: this.deviceId,
+                    deviceId: JSON.stringify(this.deviceId),
                     logo_name: this.logo['name'],
                 }
                 let formData = new FormData();
@@ -185,5 +202,13 @@
 
         }
     })
+</script>
+
+<script>
+    $('#selectEvents').select2();
+    $('#selectEvents').on('change', function(e) {
+        const val = $(this).val();
+        app.$data.deviceId = val;
+    });
 </script>
 @endsection

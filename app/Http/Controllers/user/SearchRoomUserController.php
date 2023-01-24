@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,21 @@ class SearchRoomUserController extends Controller
     public function index(Request $request)
     {
         $companyId = Auth::user()->company_id;
+        $userId = Auth::user()->id;
+        $divisionId = Auth::user()->division_id;
 
+
+        $roomRestrict =  Room::whereHas('roomRestrict', function ($q) use ($divisionId) {
+            $q->where('division_id', $divisionId);
+        })->with(['roomRestrict'])->where('company_id', $companyId)->get();
+
+
+
+        // if ($getRoomDivision !== null) {
+        //     $checkRestric = User::where('id', $userId)->whereIn('division_id', $getRoomDivision)->get();
+        // }
+
+        // return $myEvents;
         if ($companyId == null) {
             return view('user.booking.guest');
         } else {
@@ -26,7 +41,7 @@ class SearchRoomUserController extends Controller
             $internet = $request->query('internet');
             $capacity = $request->query('capacity');
 
-            $roomQuery = Room::with(['bookingRoom'])->where('company_id', $companyId);
+            $roomQuery = Room::with(['bookingRoom'])->where('company_id', $companyId)->whereNull('restrict_room');
 
             if ($req_search !== null) {
                 $roomQuery->where('name', 'LIKE', "%{$req_search}%");
@@ -78,6 +93,7 @@ class SearchRoomUserController extends Controller
             $totalItem = $rooms->total();
             // return $rooms;
             return view('user.booking.search', [
+                'room_restrict' => $roomRestrict,
                 'rooms' => $rooms,
                 'internet' => $internet,
                 'projector' => $projector,

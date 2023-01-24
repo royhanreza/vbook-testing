@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +20,9 @@ class ManageUserController extends Controller
      */
     public function index()
     {
-        $user = User::where('role_id', 3)->get();
+        $companyId = Auth::user()->company_id;
+        $user = User::with('division')->where('role_id', 3)->where('company_id', $companyId)->get();
+        // return $user;
         return view('admin.manage-user.index', [
             'user' => $user,
         ]);
@@ -31,7 +35,12 @@ class ManageUserController extends Controller
      */
     public function create()
     {
-        return view('admin.manage-user.create');
+        $companyId = Auth::user()->company_id;
+        $division = Division::where('company_id', $companyId)->get();
+        // return $division;
+        return view('admin.manage-user.create', [
+            'division' => $division,
+        ]);
     }
 
     /**
@@ -50,7 +59,9 @@ class ManageUserController extends Controller
             $newUser->username = $request->email;
             $newUser->no_telp = $request->no_telp;
             $newUser->role_id = 3;
+            $newUser->division_id = $request->division_id;
             $newUser->password = Hash::make($request->password);
+            $newUser->company_id = Auth::user()->company_id;
             $newUser->save();
 
             DB::commit();

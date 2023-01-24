@@ -3,8 +3,7 @@
 @section('title', 'Dashboard | Manage Room')
 
 @section('prehead')
-<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
-    type="text/css" />
+<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -22,8 +21,7 @@
                         <h5 class="modal-title">Detail Room</h5>
 
                         <!--begin::Close-->
-                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
-                            aria-label="Close">
+                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                             <span class="svg-icon svg-icon-2x"></span>
                         </div>
                         <!--end::Close-->
@@ -38,6 +36,16 @@
 
                             <div class="col-sm-9">
                                 <span class="fw-bolder text-dark">: &nbsp; @{{ roomDetail?.device?.name }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label form-label-sm">Email</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ roomDetail?.user?.email }}</span>
                             </div>
                         </div>
 
@@ -105,9 +113,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <span class="fw-bolder text-dark">: &nbsp; @{{ roomDetail?.color_code }} &nbsp; <span
-                                        class="badge"
-                                        :style="{ 'background-color': roomDetail?.color_code }">-</span></span>
+                                <span class="fw-bolder text-dark">: &nbsp; @{{ roomDetail?.color_code }} &nbsp; <span class="badge" :style="{ 'background-color': roomDetail?.color_code }">-</span></span>
                             </div>
                         </div>
 
@@ -139,8 +145,7 @@
                         <h5 class="modal-title">Edit Room</h5>
 
                         <!--begin::Close-->
-                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
-                            aria-label="Close">
+                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                             <span class="svg-icon svg-icon-2x"></span>
                         </div>
                         <!--end::Close-->
@@ -155,8 +160,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="roomDetail.name" class="form-control mb-2"
-                                    placeholder="Nama Ruangan" />
+                                <input type="text" v-model="roomDetail.name" class="form-control mb-2" placeholder="Nama Ruangan" />
 
                             </div>
                         </div>
@@ -169,8 +173,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="roomDetail.capacity" class="form-control mb-2"
-                                    placeholder="Nama Ruangan" />
+                                <input type="text" v-model="roomDetail.capacity" class="form-control mb-2" placeholder="Nama Ruangan" />
 
                             </div>
                         </div>
@@ -181,8 +184,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="roomDetail.ip_address" class="form-control mb-2"
-                                    placeholder="Nama Ruangan" />
+                                <input type="text" v-model="roomDetail.ip_address" class="form-control mb-2" placeholder="Nama Ruangan" />
 
                             </div>
                         </div>
@@ -193,8 +195,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="roomDetail.floor" class="form-control mb-2"
-                                    placeholder="Nama Ruangan" />
+                                <input type="text" v-model="roomDetail.floor" class="form-control mb-2" placeholder="Nama Ruangan" />
 
                             </div>
                         </div>
@@ -205,8 +206,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" v-model="roomDetail.projector" class="form-control mb-2"
-                                    placeholder="Nama Ruangan" />
+                                <input type="text" v-model="roomDetail.projector" class="form-control mb-2" placeholder="Nama Ruangan" />
 
                             </div>
                         </div>
@@ -245,14 +245,11 @@
                         <!--begin::Search-->
                         <div class="d-flex align-items-center position-relative my-1">
                             <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-search" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                 </svg>
                             </span>
-                            <input type="text" data-kt-filter="search"
-                                class="form-control form-control-solid w-250px ps-14" placeholder="Cari" />
+                            <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Cari" />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -268,8 +265,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Table-->
-                    <table class="table align-middle border rounded table-row-dashed fs-6 g-5"
-                        id="kt_datatable_example_1">
+                    <table class="table align-middle border rounded table-row-dashed fs-6 g-5" id="kt_datatable_example_1">
                         <!--begin::Table head-->
                         <thead>
                             <!--begin::Table row-->
@@ -296,10 +292,7 @@
 
                                         <div class="ms-5">
                                             <!--begin::Title-->
-                                            <a href="#" @click="onSelcected(rooms.id)" data-bs-toggle="modal"
-                                                data-bs-target="#kt_modal_1"
-                                                class="text-gray-800 text-hover-primary fs-5 fw-bolder"
-                                                data-kt-ecommerce-product-filter="product_name">@{{ rooms.name }}</a>
+                                            <a href="#" @click="onSelcected(rooms.id)" data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="text-gray-800 text-hover-primary fs-5 fw-bolder" data-kt-ecommerce-product-filter="product_name">@{{ rooms.name }}</a>
                                             <!--end::Title-->
                                         </div>
                                     </div>
@@ -320,23 +313,19 @@
                                 <!--end::Status=-->
                                 <!--begin::Action=-->
                                 <td class="text-center">
-                                    <a href="#" class="btn btn-sm btn-secondary btn-active-light-primary"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                    <a href="#" class="btn btn-sm btn-secondary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </a>
                                     <!--begin::Menu-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                                        data-kt-menu="true">
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="#" @click="onSelcected(rooms.id)" data-bs-toggle="modal"
-                                                data-bs-target="#kt_modal_edit" class="menu-link px-3">Edit</a>
+                                            <a href="#" @click="onSelcected(rooms.id)" data-bs-toggle="modal" data-bs-target="#kt_modal_edit" class="menu-link px-3">Edit</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"
-                                                @click.prevent="deleteRecord(rooms.id)">Delete</a>
+                                            <a href="#" class="menu-link px-3" @click.prevent="deleteRecord(rooms.id)">Delete</a>
                                         </div>
                                         <!--end::Menu item-->
                                     </div>
