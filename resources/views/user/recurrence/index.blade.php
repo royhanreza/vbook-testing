@@ -1,27 +1,14 @@
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular & Laravel Admin Dashboard Theme
-Purchase: https://1.envato.market/EA4JP
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
+
 <html lang="en">
 <!--begin::Head-->
 
 <head>
-    <base href="../">
-    <title>Create Booking</title>
+
+    <title>Recurrence Room</title>
     <meta charset="utf-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:locale" content="en_US" />
     <link rel="shortcut icon" href="{{ asset('gambar/logo-vbook.png') }}" />
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
 
@@ -29,12 +16,20 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-</head>
-<!--end::Head-->
-<!--begin::Body-->
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">
-    <div id="app">
+</head>
+
+<style>
+    .circle-icon {
+        display: inline-block;
+        border-radius: 60px;
+        box-shadow: 0 0 2px #888;
+        padding: 0.5em 0.6em;
+    }
+</style>
+<div id="app" v-cloak>
+
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">
         <!--begin::Main-->
         <!--begin::Root-->
         <div class="d-flex flex-column flex-root">
@@ -49,7 +44,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--end::Logo-->
                     <!--begin::Nav-->
                     <div class="aside-nav d-flex flex-column align-lg-center flex-column-fluid w-100 pt-5 pt-lg-0" id="kt_aside_nav">
-                        <!--begin::Primary menu-->
+
                         <div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold fs-6" data-kt-menu="true">
                             <div class="menu-item">
                                 <a class="menu-link" href="/booking">
@@ -61,7 +56,6 @@ License: For each use you must have a valid license purchased only from above li
                                     </span>
                                 </a>
                             </div>
-
 
                             @if (auth()->user()->role_id == 3)
                             <div class="menu-item">
@@ -82,6 +76,7 @@ License: For each use you must have a valid license purchased only from above li
                                     </span>
                                 </a>
                             </div>
+
                             <div class="menu-item">
                                 <a class="menu-link" href="/user/profile">
                                     <span class="menu-link menu-center" title="Profile" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
@@ -93,6 +88,7 @@ License: For each use you must have a valid license purchased only from above li
                             </div>
                             @endif
                         </div>
+                        <!--end::Primary menu-->
                     </div>
 
                     <!--end::Footer-->
@@ -122,6 +118,7 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                                 <a href="#" class="d-lg-none">
                                     <img alt="Logo" src="{{ asset('gambar/logo-vbook.png') }}" class="h-30px" />
+
                                 </a>
                             </div>
                             <!--end::Mobile logo-->
@@ -129,7 +126,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Page title-->
                                 <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 pb-2 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_wrapper'}">
                                     <!--begin::Heading-->
-                                    <h1 class="text-dark fw-bolder my-1 fs-3 lh-1">Booking Room</h1>
+                                    <h1 class="text-dark fw-bolder my-1 fs-3 lh-1">Recurrence Booking</h1>
 
                                 </div>
                                 <!--end::Page title=-->
@@ -192,15 +189,14 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="menu-item px-5">
                                                 <a href="/user/profile" class="menu-link px-5">My Profile</a>
                                                 <a href="/user/logout" class="menu-link px-5">Logout</a>
+
                                             </div>
                                         </div>
                                         @endif
                                     </div>
                                 </div>
                             </div>
-                            <!--end::Wrapper-->
                         </div>
-                        <!--end::Container-->
                     </div>
 
                     <!-- ===========================================================NAVBAR BUTTOM MOBILE ============================================= -->
@@ -250,193 +246,94 @@ License: For each use you must have a valid license purchased only from above li
                         </ul>
                     </nav>
                     <!-- ===========================================================NAVBAR BUTTOM MOBILE END ============================================= -->
-
                     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                         <!--begin::Container-->
                         <div class="container-xxl" id="kt_content_container">
+                            <!--begin::Card-->
+                            <div class="card">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <h2 class="card-title fw-bolder">Recurrence Booking</h2>
+                                    <div class="card-toolbar">
 
-                            <form @submit.prevent="submitForm" enctype="multipart/form-data" id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row">
-                                @csrf
-                                <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+                                    </div>
+                                </div>
 
-                                    <div class="card card-flush py-4">
-                                        <!--begin::Card header-->
-                                        <div class="card-header">
-                                            <!--begin::Card title-->
-                                            <div class="card-title">
-                                                <h2>Selected Room</h2>
-                                            </div>
-                                            <div class="card-toolbar">
-                                                <i class="bi bi-bank"></i>
-                                            </div>
-                                            <!--begin::Card toolbar-->
-                                        </div>
-                                        <div class="card-body pt-0">
-                                            <span class="badge text-white" style="background:{{ $rooms->color_code }};border:0; font-size:14px;">
-                                                {{ $rooms->name }}
+
+                                <div class="card-body">
+                                    <div class="card-body pt-0">
+                                        <div class="d-flex align-items-center position-relative my-1">
+                                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                </svg>
                                             </span>
-
-                                            <br>
-                                            <br>
-                                            <div class="row col-md-12">
-                                                <div class="col-md-6">
-                                                    Capacity
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    :&nbsp; <b>{{ $rooms->capacity }}</b>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="row col-md-12">
-                                                <div class="col-md-6">
-                                                    Floor
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    :&nbsp; <b>{{ $rooms->floor }}</b>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="row col-md-12">
-                                                <div class="col-md-6">
-                                                    Projector
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    :&nbsp; <b> @if ($rooms->projector == 1)
-                                                        <span class="fw-bolder text-dark">Available</span>
-                                                        @else
-                                                        <span class="fw-bolder text-dark">Not Available</span>
-                                                        @endif
-                                                    </b>
-                                                </div>
-
-                                            </div>
-
+                                            <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search" />
                                         </div>
+                                        <!--begin::Table-->
+                                        <table class="table align-middle border rounded table-row-dashed fs-6 g-5" id="kt_datatable_example_1">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="text-center min-w-20px">No</th>
+                                                    <th class="text-center min-w-100px">Title</th>
+                                                    <th class="text-center min-w-100px">Start Date</th>
+                                                    <th class="text-center min-w-100px">End Date</th>
+                                                    <th class="text-center min-w-100px">Room</th>
+                                                    <th class="text-center min-w-100px">Recurrence</th>
+                                                    <th class="text-center min-w-100px">Status</th>
+
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <tbody class="fw-bold text-gray-600">
+                                                <!--begin::Table row-->
+                                                <tr v-for="(bookings, index) in booking">
+
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3">@{{ index +1 }}</span>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3">@{{ bookings.title }}</span>
+                                                    </td>
 
 
-                                        <!--end::Card body-->
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3">@{{ bookings.start_date }}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3">@{{ bookings.end_date }}</span>
+                                                    </td>
+
+
+                                                    <!--begin::Status=-->
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3">@{{ bookings.room.name }}</span>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3" v-if="bookings.recurrence_booking_id == null"> Not</span>
+                                                        <span class="fw-bolder ms-3" v-else> Yes</span>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <span class="fw-bolder ms-3">@{{ bookings.status_booking }}</span>
+                                                    </td>
+
+                                                    <!--end::Action=-->
+                                                </tr>
+
+                                                <!--end::Table row-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
                                     </div>
-                                    <!--end::Status-->
-
                                 </div>
 
-
-
-                                <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
-
-                                    <div class="d-flex flex-column gap-7 gap-lg-10">
-                                        <div class="card card-flush py-4">
-                                            <div class="card-header">
-                                                <div class="card-title">
-                                                    <h2>Create Booking</h2>
-                                                </div>
-                                            </div>
-                                            <div class="card-body pt-0">
-                                                <div class="mb-2 fv-row">
-                                                    <label class="required form-label">Title</label>
-                                                    <input type="text" v-model="title" class="form-control mb-2" placeholder="Title" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="card-body pt-0">
-                                                <div class="mb-2 fv-row">
-                                                    <label class="required form-label">Department</label>
-                                                    <input type="text" v-model="department" class="form-control mb-2" placeholder="Department" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="card-body pt-0">
-                                                <div class="mb-2 fv-row">
-                                                    <label class="required form-label">Description</label>
-                                                    <textarea v-model="description" class="form-control mb-2" placeholder="Description" style="height: 80px"></textarea>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="card-body pt-0">
-
-                                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                                    <div>
-                                                        <label class="required form-label">Participant</label> <br>
-                                                        <small> Invited participants cannot be more than <b>{{ $rooms->capacity }} users </b> </small>
-                                                    </div>
-                                                    <div>
-                                                        <a @click="addEmail" class="btn btn-light btn-sm">
-                                                            <i class="bi bi-plus"></i>
-                                                            Add Participant
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div v-for="(participants2, index) in participant" :key="index" class="row">
-                                                    <div class="col-1 fw-bold pt-1">
-                                                        <span>@{{ index + 1 }}.</span>
-                                                    </div>
-                                                    <div class="col-11">
-                                                        <div class="row align-items-center">
-
-                                                            <div class="col-sm-8">
-                                                                <input type="text" v-model="participants2.email" class="form-control form-control-sm" placeholder="Masukkan Email">
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a href="#" class="btn btn-active-light-danger text-danger btn-sm" @click.prevent="removeEmailParticipant(index)"><i class="bi bi-trash text-danger align-middle"></i>Hapus</a>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="separator my-8"></div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="card-body pt-0">
-                                                <div class="mb-2 fv-row">
-                                                    <label class="required form-label">Start Date</label>
-                                                    <input type="datetime-local" v-model="start_date" id="start" class="form-control mb-2">
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="card-body pt-0">
-                                                <div class="mb-2 fv-row">
-                                                    <label class="required form-label">End Date</label>
-                                                    <input type="datetime-local" v-model="end_date" id="end" class="form-control mb-2">
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                    <!--end::Tab pane-->
-
-                                    <!--end::Tab content-->
-                                    <div class="d-flex justify-content-end">
-                                        <!--begin::Button-->
-                                        <a href="/booking/search" id="kt_ecommerce_add_product_cancel" class="btn btn-secondary me-5">Cancel</a>
-                                        <!--end::Button-->
-                                        <!--begin::Button-->
-                                        <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
-                                            <span class="indicator-label">Save</span>
-                                            <span class="indicator-progress">Please wait...
-                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                        </button>
-                                        <!--end::Button-->
-                                    </div>
-                                </div>
-                                <!--end::Main column-->
-                            </form>
+                            </div>
 
                         </div>
                     </div>
@@ -446,6 +343,8 @@ License: For each use you must have a valid license purchased only from above li
             </div>
             <!--end::Page-->
         </div>
+
+
 
         <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -458,157 +357,145 @@ License: For each use you must have a valid license purchased only from above li
             <!--end::Svg Icon-->
         </div>
 
-    </div>
 
 
-    <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Vendors Javascript(used by this page)-->
+    </body>
+</div>
 
-    <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
-    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 
+<!--end::Global Javascript Bundle-->
+<!--begin::Page Vendors Javascript(used by this page)-->
 
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('assets/js/custom/apps/calendar/calendar.js') }}"></script>
-    <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-cleave-component@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script> -->
+<script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
 
-    <script>
-        let app = new Vue({
-            el: '#app',
-            data: {
-                title: '',
-                department: '',
-                description: '',
-                start_date: '',
-                end_date: '',
-                roomId: '{{ $rooms->id}}',
+<!--end::Page Vendors Javascript-->
+<!--begin::Page Custom Javascript(used by this page)-->
+<!-- <script src="{{ asset('assets/js/custom/apps/calendar/calendar.js') }}"></script> -->
+<script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 
-                participant: [{
-                    email: '{{ $emailOrganizer}}',
+<script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
+<script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+<script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 
-                }],
-                loading: false,
-            },
-            methods: {
-                addEmail() {
-                    const emailParticipant = {
-                        email: '',
+<!-- <script src="{{ asset('callendar/dist/index.global.js') }}"></script> -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
-                    };
+<script>
+    const booking = <?php echo Illuminate\Support\Js::from($booking) ?>;
+    let app = new Vue({
+        el: '#app',
+        data: {
+            booking,
+        },
+        methods: {
+            //
 
-                    this.participant.push(emailParticipant);
-                },
-                removeEmailParticipant(index) {
-                    this.participant.splice(index, 1);
-                },
-                submitForm: function() {
-                    if (this.title == '') {
-                        Swal.fire(
-                            'There is an error!',
-                            'Title cannot be empty .',
-                            'error'
-                        )
-                    } else if (this.department == '') {
-                        Swal.fire(
-                            'There is an error!',
-                            'Department cannot be empty .',
-                            'error'
-                        )
-                    } else if (this.start_date == '') {
-                        Swal.fire(
-                            'There is an error!',
-                            'Start Date cannot be empty .',
-                            'error'
-                        )
-                    } else if (this.end_date == '') {
-                        Swal.fire(
-                            'There is an error!',
-                            'End Date cannot be empty .',
-                            'error'
-                        )
-                    } else {
-                        this.sendData();
+        }
+    })
+</script>
+
+<script>
+    "use strict";
+
+    // Class definition
+    var KTDatatablesButtons = function() {
+        // Shared variables
+        var table;
+        var datatable;
+
+        // Private functions
+        var initDatatable = function() {
+            // Set date data order
+            const tableRows = table.querySelectorAll('tbody tr');
+
+            tableRows.forEach(row => {
+                const dateRow = row.querySelectorAll('td');
+                const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 4th column in table
+                dateRow[3].setAttribute('data-order', realDate);
+            });
+
+            // Init datatable --- more info on datatables: https://datatables.net/manual/
+            datatable = $(table).DataTable({
+                "info": false,
+                'order': [],
+                'pageLength': 10,
+            });
+        }
+
+        // Hook export buttons
+        var exportButtons = () => {
+            const documentTitle = 'Data Lowongan Kerja';
+            var buttons = new $.fn.dataTable.Buttons(table, {
+                buttons: [{
+                        extend: 'copyHtml5',
+                        title: documentTitle
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: documentTitle
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: documentTitle
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: documentTitle
                     }
+                ]
+            }).container().appendTo($('#kt_datatable_example_1_export'));
 
-                },
-                sendData: function() {
-                    let vm = this;
-                    vm.loading = true;
-                    axios.post('/booking', {
-                            title: this.title,
-                            department: this.department,
-                            description: this.description,
-                            start_date: this.start_date,
-                            end_date: this.end_date,
-                            room_id: this.roomId,
-                            // participant: JSON.stringify(this.participant),
-                            participant: this.participant,
-                        })
-                        .then(function(response) {
-                            vm.loading = false;
-                            Swal.fire({
-                                title: 'Berhasil',
-                                text: 'Booking berhasil disimpan.',
-                                icon: 'success',
-                                showConfirmButton: false,
-                            })
-                            setTimeout(function() {
-                                window.location.href = '/booking';
-                            }, 2000);
+            // Hook dropdown menu click event to datatable export buttons
+            const exportButtons = document.querySelectorAll('#kt_datatable_example_1_export_menu [data-kt-export]');
+            exportButtons.forEach(exportButton => {
+                exportButton.addEventListener('click', e => {
+                    e.preventDefault();
 
+                    // Get clicked export value
+                    const exportValue = e.target.getAttribute('data-kt-export');
+                    const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
 
-                            // Swal.fire({
-                            //     title: 'Berhasil',
-                            //     text: 'Booking berhasil disimpan.',
-                            //     icon: 'success',
-                            //     allowOutsideClick: false,
-                            // }).then((result) => {
-                            //     if (result.isConfirmed) {
-                            //         window.location.href = '/booking';
-                            //     }
-                            // })
-                            // console.log(response);
-                        })
-                        .catch(function(error) {
-                            vm.loading = false;
-                            console.log(error);
-                            Swal.fire({
-                                title: 'Gagal Menyimpan',
-                                error: true,
-                                icon: 'error',
-                                text: error.response.data.message,
-                            })
-                        });
-                },
+                    // Trigger click event on hidden datatable export buttons
+                    target.click();
+                });
+            });
+        }
 
+        var handleSearchDatatable = () => {
+            const filterSearch = document.querySelector('[data-kt-filter="search"]');
+            filterSearch.addEventListener('keyup', function(e) {
+                datatable.search(e.target.value).draw();
+            });
+        }
 
+        // Public methods
+        return {
+            init: function() {
+                table = document.querySelector('#kt_datatable_example_1');
+
+                if (!table) {
+                    return;
+                }
+
+                initDatatable();
+                exportButtons();
+                handleSearchDatatable();
             }
-        })
-    </script>
+        };
+    }();
 
-    <script>
-        $('#selectEvents').select2();
-        $('#selectEvents').on('change', function(e) {
-            const val = $(this).val();
-            app.$data.participant = val;
-        });
-    </script>
-</body>
-<!--end::Body-->
+    // On document ready
+    KTUtil.onDOMContentLoaded(function() {
+        KTDatatablesButtons.init();
+    });
+</script>
 
 </html>

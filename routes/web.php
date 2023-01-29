@@ -15,6 +15,7 @@ use App\Http\Controllers\guest\SearchBookingGuestController;
 use App\Http\Controllers\receptionist\AuthReceptionistController;
 use App\Http\Controllers\receptionist\ManageGuestController;
 use App\Http\Controllers\admin\ManageReceptionistController;
+use App\Http\Controllers\receptionist\ActivityGuestController;
 use App\Http\Controllers\receptionist\ReceptionistController;
 use App\Http\Controllers\room\AuthRoomController;
 use App\Http\Controllers\room\RoomDashboardController;
@@ -32,6 +33,8 @@ use App\Http\Controllers\user\SearchRoomUserController;
 use App\Http\Controllers\user\UserDashboardController;
 use App\Http\Controllers\superadmin\ManageCompanyController;
 use App\Http\Controllers\superadmin\SettingSuperadminController;
+use App\Http\Controllers\user\HistoryBookingController;
+use App\Http\Controllers\user\RecurringBookingController;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -251,12 +254,23 @@ Route::group(['middleware' => 'multi'], function () {
     });
 
     Route::controller(SearchRoomUserController::class)->prefix('/booking')->group(function () {
-        Route::get('/search', 'index')->name('booking-searvh.dashboard');
+        Route::get('/search', 'index')->name('booking-searh.dashboard');
     });
 
     Route::controller(BookingRoomController::class)->prefix('/booking')->group(function () {
         Route::get('/{id}/create', 'create')->name('booking.create');
-        Route::post('/', 'store')->name('bokking.post');
+        Route::post('/', 'store')->name('booking.post');
+    });
+
+    Route::controller(RecurringBookingController::class)->prefix('/recurring-booking')->group(function () {
+        Route::get('/{id}/create', 'create')->name('recurring.create');
+        Route::get('/', 'index')->name('recurring.index');
+        Route::get('/search', 'search')->name('recurring.search');
+        Route::post('/', 'store')->name('recurring.post');
+    });
+
+    Route::controller(HistoryBookingController::class)->prefix('/history-booking')->group(function () {
+        Route::get('/', 'index')->name('history-booking.index');
     });
 });
 // ====================================== SELESAI ROUTE HALAMAN BOOKING ================================
@@ -279,6 +293,10 @@ Route::group(['middleware' => 'receptionist'], function () {
         Route::delete('/{id}', 'destroy')->name('manage-guest.destroy');
         Route::post('/{id}', 'restore')->name('manage-guest.restore');
         Route::post('/{id}/aktif', 'aktif')->name('manage-guest.aktif');
+    });
+
+    Route::controller(ActivityGuestController::class)->prefix('/receptionist/manage-guest')->group(function () {
+        Route::get('/activity', 'index')->name('manage-guest.activity');
     });
 });
 // ====================================== SELESAI ROUTE HALAMAN RECEPTIONIST ================================

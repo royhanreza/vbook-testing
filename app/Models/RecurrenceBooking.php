@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Participant extends Model
+class RecurrenceBooking extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
-    public function bookingRoom()
+    public function booking()
     {
-        return $this->belongsTo(BookingRoom::class, 'booking_id');
+        return $this->hasMany(BookingRoom::class, 'recurrence_booking_id');
     }
 }

@@ -311,7 +311,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <small> Invited participants cannot be more than <b>{{ $rooms->capacity }} users </b> </small>
                                                     </div>
                                                     <div>
-                                                        <a @click="addBankAccount" class="btn btn-light btn-sm">
+                                                        <a @click="addEmail" class="btn btn-light btn-sm">
                                                             <i class="bi bi-plus"></i>
                                                             Add Participant
                                                         </a>
@@ -328,7 +328,7 @@ License: For each use you must have a valid license purchased only from above li
                                                                 <input type="text" v-model="participants2.email" class="form-control form-control-sm" placeholder="Masukkan Email">
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <a href="#" class="btn btn-active-light-danger text-danger btn-sm" @click.prevent="removeBankAccount(index)"><i class="bi bi-trash text-danger align-middle"></i>Hapus</a>
+                                                                <a href="#" class="btn btn-active-light-danger text-danger btn-sm" @click.prevent="removeEmail(index)"><i class="bi bi-trash text-danger align-middle"></i>Hapus</a>
                                                             </div>
                                                         </div>
 
@@ -447,19 +447,45 @@ License: For each use you must have a valid license purchased only from above li
                 loading: false,
             },
             methods: {
-                addBankAccount() {
-                    const bankAccount = {
+                addEmail() {
+                    const emailParticipant = {
                         email: '',
 
                     };
 
-                    this.participant.push(bankAccount);
+                    this.participant.push(emailParticipant);
                 },
-                removeBankAccount(index) {
+                removeEmail(index) {
                     this.participant.splice(index, 1);
                 },
                 submitForm: function() {
-                    this.sendData();
+                    if (this.title == '') {
+                        Swal.fire(
+                            'There is an error!',
+                            'Title cannot be empty .',
+                            'error'
+                        )
+                    } else if (this.department == '') {
+                        Swal.fire(
+                            'There is an error!',
+                            'Department cannot be empty .',
+                            'error'
+                        )
+                    } else if (this.start_date == '') {
+                        Swal.fire(
+                            'There is an error!',
+                            'Start Date cannot be empty .',
+                            'error'
+                        )
+                    } else if (this.end_date == '') {
+                        Swal.fire(
+                            'There is an error!',
+                            'End Date cannot be empty .',
+                            'error'
+                        )
+                    } else {
+                        this.sendData();
+                    }
                 },
                 sendData: function() {
                     let vm = this;

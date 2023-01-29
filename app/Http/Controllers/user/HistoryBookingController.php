@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\receptionist;
+namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\BookingRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ReceptionistController extends Controller
+class HistoryBookingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class ReceptionistController extends Controller
     public function index()
     {
         $companyId = Auth::user()->company_id;
-        $countUser = User::where('role_id', 6)->where('company_id', $companyId)->count();
-
-        return view('receptionist.dashboard.index', [
-            'countUser' => $countUser
+        $emailUser = Auth::user()->email;
+        $userId = Auth::user()->id;
+        $booking =  BookingRoom::with(['room', 'participant', 'recurrence'])->where('company_id', $companyId)->where('user_id', $userId)->where('status_booking', 'finished')->get();
+        return view('user.history.index', [
+            'booking' => $booking
         ]);
     }
 

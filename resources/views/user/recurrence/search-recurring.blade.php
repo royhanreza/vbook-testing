@@ -482,7 +482,7 @@
                                                 @foreach ($room_restrict as $room_restricts)
                                                 <div class="col-md-6 col-xl-6">
                                                     <!--begin::Card-->
-                                                    <a href="/booking/{{ $room_restricts->id }}/create" class="card border-hover-primary mb-6">
+                                                    <a href="/recurring-booking/{{ $room_restricts->id }}/create" class="card border-hover-primary mb-6">
                                                         <!--begin::Card header-->
                                                         <div class="card-header ribbon ribbon-top border-0 pt-9">
 
@@ -573,7 +573,7 @@
                                                 @foreach ($rooms as $room)
                                                 <div class="col-md-6 col-xl-6">
                                                     <!--begin::Card-->
-                                                    <a href="/booking/{{ $room->id }}/create" class="card border-hover-primary mb-6">
+                                                    <a href="/recurring-booking/{{ $room->id }}/create" class="card border-hover-primary mb-6">
                                                         <!--begin::Card header-->
                                                         <div class="card-header ribbon ribbon-top border-0 pt-9">
                                                             <div class="ribbon-label bg-dark">
@@ -755,11 +755,11 @@
             methods: {
                 submitSearch: function() {
                     // console.log(this.sort_by)
-                    window.location.href = `/booking/search?` + this.generatedURL;
+                    window.location.href = `/recurring-booking/search?` + this.generatedURL;
                 },
                 submitForm: function() {
                     // console.log(this.sort_by)
-                    window.location.href = `/booking/search?` + this.generatedURL;
+                    window.location.href = `/recurring-booking/search?` + this.generatedURL;
                 },
 
 

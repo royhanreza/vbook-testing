@@ -23,4 +23,9 @@ class BookingRoom extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function recurrence()
+    {
+        return $this->belongsTo(RecurrenceBooking::class, 'recurrence_booking_id');
+    }
 }

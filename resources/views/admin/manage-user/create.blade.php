@@ -127,7 +127,34 @@
         },
         methods: {
             submitForm: function() {
-                this.sendData();
+                if (this.divisionId == '0') {
+                    Swal.fire(
+                        'There is an error!',
+                        'division cannot be empty .',
+                        'error'
+                    )
+                } else if (this.name == '') {
+                    Swal.fire(
+                        'There is an error!',
+                        'name cannot be empty .',
+                        'error'
+                    )
+                } else if (this.email == '') {
+                    Swal.fire(
+                        'There is an error!',
+                        'email cannot be empty .',
+                        'error'
+                    )
+                } else if (this.password == '') {
+                    Swal.fire(
+                        'There is an error!',
+                        'password cannot be empty .',
+                        'error'
+                    )
+                } else {
+                    this.sendData();
+                }
+
             },
             sendData: function() {
                 let vm = this;

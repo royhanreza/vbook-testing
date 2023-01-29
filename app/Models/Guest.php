@@ -12,6 +12,16 @@ class Guest extends Model
 
     public function division()
     {
-        return $this->belongsTo(division::class, 'division_id');
+        return $this->belongsTo(Division::class, 'division_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function guest()
+    {
+        return $this->hasMany(GuestActivity::class, 'guest_id');
     }
 }

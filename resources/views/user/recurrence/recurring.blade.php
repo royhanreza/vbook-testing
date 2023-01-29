@@ -15,7 +15,7 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
     <base href="../">
-    <title>Create Booking</title>
+    <title>Create Recurring Booking</title>
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -129,7 +129,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Page title-->
                                 <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 pb-2 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_wrapper'}">
                                     <!--begin::Heading-->
-                                    <h1 class="text-dark fw-bolder my-1 fs-3 lh-1">Booking Room</h1>
+                                    <h1 class="text-dark fw-bolder my-1 fs-3 lh-1">Recurring Booking Room</h1>
 
                                 </div>
                                 <!--end::Page title=-->
@@ -251,6 +251,7 @@ License: For each use you must have a valid license purchased only from above li
                     </nav>
                     <!-- ===========================================================NAVBAR BUTTOM MOBILE END ============================================= -->
 
+
                     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                         <!--begin::Container-->
                         <div class="container-xxl" id="kt_content_container">
@@ -333,7 +334,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="card card-flush py-4">
                                             <div class="card-header">
                                                 <div class="card-title">
-                                                    <h2>Create Booking</h2>
+                                                    <h2>Create Recurring Booking</h2>
                                                 </div>
                                             </div>
                                             <div class="card-body pt-0">
@@ -386,7 +387,7 @@ License: For each use you must have a valid license purchased only from above li
                                                                 <input type="text" v-model="participants2.email" class="form-control form-control-sm" placeholder="Masukkan Email">
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <a href="#" class="btn btn-active-light-danger text-danger btn-sm" @click.prevent="removeEmailParticipant(index)"><i class="bi bi-trash text-danger align-middle"></i>Hapus</a>
+                                                                <a href="#" class="btn btn-active-light-danger text-danger btn-sm" @click.prevent="removeEmail(index)"><i class="bi bi-trash text-danger align-middle"></i>Hapus</a>
                                                             </div>
                                                         </div>
 
@@ -414,6 +415,44 @@ License: For each use you must have a valid license purchased only from above li
                                                 </div>
 
                                             </div>
+
+                                            <div class="card-body pt-0">
+                                                <div class="alert alert-success align-items-center">
+                                                    <!--begin::Icon-->
+
+                                                    <!--end::Icon-->
+
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column">
+                                                        <!--begin::Title-->
+                                                        <h4 class="mb-1 text-dark mb-8">Repeat on</h4>
+                                                        <!--end::Title-->
+                                                        <div class="col-12 mb-4">
+
+                                                            <div class="form-check mb-8">
+                                                                <input class="form-check-input" type="radio" v-model="recurrence" value="daily" id="daily">
+                                                                <label class="form-check-label" for="daily">
+                                                                    Daily
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check mb-8">
+                                                                <input class="form-check-input" type="radio" v-model="recurrence" value="weekly" id="weekly">
+                                                                <label class="form-check-label" for="weekly">
+                                                                    Weekly
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check mb-8">
+                                                                <input class="form-check-input" type="radio" v-model="recurrence" value="monthly" id="monthly">
+                                                                <label class="form-check-label" for="monthly">
+                                                                    Monthly
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                            </div>
+                                            <!--end::Alert-->
                                         </div>
 
 
@@ -424,7 +463,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--end::Tab content-->
                                     <div class="d-flex justify-content-end">
                                         <!--begin::Button-->
-                                        <a href="/booking/search" id="kt_ecommerce_add_product_cancel" class="btn btn-secondary me-5">Cancel</a>
+                                        <a href="/recurring-booking/search" id="kt_ecommerce_add_product_cancel" class="btn btn-secondary me-5">Cancel</a>
                                         <!--end::Button-->
                                         <!--begin::Button-->
                                         <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
@@ -496,6 +535,7 @@ License: For each use you must have a valid license purchased only from above li
                 description: '',
                 start_date: '',
                 end_date: '',
+                recurrence: '',
                 roomId: '{{ $rooms->id}}',
 
                 participant: [{
@@ -513,7 +553,7 @@ License: For each use you must have a valid license purchased only from above li
 
                     this.participant.push(emailParticipant);
                 },
-                removeEmailParticipant(index) {
+                removeEmail(index) {
                     this.participant.splice(index, 1);
                 },
                 submitForm: function() {
@@ -544,18 +584,18 @@ License: For each use you must have a valid license purchased only from above li
                     } else {
                         this.sendData();
                     }
-
                 },
                 sendData: function() {
                     let vm = this;
                     vm.loading = true;
-                    axios.post('/booking', {
+                    axios.post('/recurring-booking', {
                             title: this.title,
                             department: this.department,
                             description: this.description,
                             start_date: this.start_date,
                             end_date: this.end_date,
                             room_id: this.roomId,
+                            recurrence: this.recurrence,
                             // participant: JSON.stringify(this.participant),
                             participant: this.participant,
                         })
@@ -567,9 +607,9 @@ License: For each use you must have a valid license purchased only from above li
                                 icon: 'success',
                                 showConfirmButton: false,
                             })
-                            setTimeout(function() {
-                                window.location.href = '/booking';
-                            }, 2000);
+                            // setTimeout(function() {
+                            //     window.location.href = '/recurring-booking';
+                            // }, 2000);
 
 
                             // Swal.fire({

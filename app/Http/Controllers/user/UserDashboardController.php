@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\BookingRoom;
 use App\Models\Company;
+use App\Models\RecurrenceBooking;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,18 +32,35 @@ class UserDashboardController extends Controller
         $emailUser = Auth::user()->email;
         $userId = Auth::user()->id;
         $events = array();
+
+        $recurrenceBooking = RecurrenceBooking::where('user_id', $userId)->first();
+        // return $recurrenceBooking;
+
         // $bookings = BookingRoom::with('room')->where('user_id', $userId)->whereNot('status_booking', 'finished')->get();
         // $myEvents = BookingRoom::with('room')->where('user_id', $userId)->whereNot('status_booking', 'finished')->get();
+
+        // $myEvents =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
+        //     $q->where('email', $emailUser);
+        // })->with(['room', 'participant'])->whereNot('status_booking', 'finished')->where('company_id', $companyId)->get();
+        // $bookings =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
+        //     $q->where('email', $emailUser);
+        // })->with(['room', 'participant', 'recurrence'])->where('company_id', $companyId)->get();
+
+
         $myEvents =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
             $q->where('email', $emailUser);
         })->with(['room', 'participant'])->whereNot('status_booking', 'finished')->where('company_id', $companyId)->get();
 
-
-        // $bookings = BookingRoom::with('room', 'participant')->where('user_id', $userId)->get();
+        // $bookings =  BookingRoom::with(['room', 'participant', 'recurrence'])->where('company_id', $companyId)->get();
 
         $bookings =  BookingRoom::whereHas('participant', function ($q) use ($emailUser) {
             $q->where('email', $emailUser);
-        })->with(['room', 'participant'])->where('company_id', $companyId)->get();
+        })->with(['room', 'participant', 'recurrence'])->where('company_id', $companyId)->get();
+
+        // return $bookings;
+        // $bookings = BookingRoom::with('room', 'participant')->where('user_id', $userId)->get();
+
+
 
         // $bookingAdmin = BookingRoom::with('room')->whereNot('status_booking', 'finished')->get();
         $bookingAdmin = BookingRoom::with('room')->where('company_id', $companyId)->get();
@@ -77,7 +95,7 @@ class UserDashboardController extends Controller
                     'borderColor'    => $bdcolor
                 ];
             }
-            $rooms = Room::all();
+            $rooms = Room::where('company_id', $companyId)->get();
             return view('user.dashboard.booking-room', [
                 'rooms' => $rooms,
                 'events' => $events,
@@ -99,7 +117,7 @@ class UserDashboardController extends Controller
                     'borderColor'    => $bdcolor
                 ];
             }
-            $rooms = Room::all();
+            $rooms = Room::where('company_id', $companyId)->get();
             return view('user.dashboard.booking-room', [
                 'rooms' => $rooms,
                 'events' => $events,

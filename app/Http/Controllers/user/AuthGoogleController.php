@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Session as FacadesSession;
 
 class AuthGoogleController extends Controller
 {
@@ -39,22 +40,31 @@ class AuthGoogleController extends Controller
             $user_google    = Socialite::driver('google')->user();
             $user           = User::where('email', $user_google->getEmail())->first();
             if ($user != null) {
-                // set session
+
                 Auth::login($user, true);
                 return redirect()->route('user.dashboard');
+                // set session
+                $userId = $user->id;
+                $newSession = User::find('user_id', $userId);
+                $newSession->google_id = $user_google->id;
+                $newSession->google_token = $user_google->token;
+                $newSession->save();
             } else {
-                $newUser = new User();
-                $newUser->name = $user_google->name;
-                $newUser->email = $user_google->email;
-                $newUser->username = $user_google->email;
-                $newUser->google_id = $user_google->id;
-                $newUser->google_token = $user_google->token;
-                $newUser->role_id = 3;
-                $newUser->password = Hash::make(12345678);
-                $newUser->save();
+                // $newUser = new User();
+                // $newUser->name = $user_google->name;
+                // $newUser->email = $user_google->email;
+                // $newUser->username = $user_google->email;
+                // $newUser->google_id = $user_google->id;
+                // $newUser->google_token = $user_google->token;
+                // $newUser->role_id = 3;
+                // $newUser->password = Hash::make(12345678);
+                // $newUser->save();
 
-                Auth::login($newUser, true);
-                return redirect()->route('user.dashboard');
+                // Auth::login($newUser, true);
+                // return redirect()->route('user.dashboard');
+
+                FacadesSession::flash('error', 'Email belum terdaftar di system, Harap registrasi melalui admin');
+                return redirect()->route('user.login');
             }
         } catch (Exception $e) {
             dd($e);

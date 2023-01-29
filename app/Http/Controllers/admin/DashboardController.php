@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -29,8 +30,9 @@ class DashboardController extends Controller
 
         // return $bookingDate;
         // return $bookingOnGoing;
-        $countUser = User::where('role_id', 3)->count();
-        $countRoom = Room::count();
+        $companyId = Auth::user()->company_id;
+        $countUser = User::where('role_id', 3)->where('company_id', $companyId)->count();
+        $countRoom = Room::where('company_id', $companyId)->count();
         return view('admin.dashboard.index', [
             'count_user' => $countUser,
             'count_room' => $countRoom,

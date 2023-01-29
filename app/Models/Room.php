@@ -28,6 +28,6 @@ class Room extends Model
 
     public function roomRestrict()
     {
-        return $this->hasMany(roomRestrict::class, 'room_id');
+        return $this->hasMany(RoomRestrict::class, 'room_id');
     }
 }

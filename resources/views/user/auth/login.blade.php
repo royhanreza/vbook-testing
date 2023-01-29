@@ -28,6 +28,25 @@
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="../../demo4/dist/index.html" action="#">
                         <!--begin::Heading-->
                         <div class="text-center mb-10">
+                            @if (Session::has('success'))
+                            <div class="card-alert card green">
+                                <div class="card-content white-text">
+                                    <p> {{ Session::get('success') }}</p>
+                                </div>
+                                <button type="button" class="close green-text" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            @endif
+
+                            @if (Session::has('error'))
+                            <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row p-5 mb-10">
+                                <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                                    <span>{{ Session::get('error') }}</span>
+                                </div>
+
+                            </div>
+                            @endif
                             <!--begin::Title-->
 
                             <img alt="Logo" src="{{ asset('gambar/Meeting.png') }}" width="150px" class="mb-4" />
@@ -54,8 +73,13 @@
         </div>
         <!--end::Authentication - Sign-in-->
     </div>
-    <script>
-        var hostUrl = "assets/";
+    <script type="text/javascript">
+        window.setTimeout(function() {
+            $(".alert").fadeTo(300, 0).slideUp(300, function() {
+                $(this).remove();
+            });
+
+        }, 3000);
     </script>
     <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>

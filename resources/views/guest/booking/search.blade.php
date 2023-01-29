@@ -425,7 +425,7 @@
                                                 @foreach ($room_restrict as $room_restricts)
                                                 <div class="col-md-6 col-xl-6">
                                                     <!--begin::Card-->
-                                                    <a href="/guest-booking/ceate/{{ $room_restricts->id }}" class="card border-hover-primary mb-6">
+                                                    <a href="/guest-booking/create/{{ $room_restricts->id }}" class="card border-hover-primary mb-6">
                                                         <!--begin::Card header-->
                                                         <div class="card-header ribbon ribbon-top border-0 pt-9">
 
@@ -698,11 +698,11 @@
             methods: {
                 submitSearch: function() {
                     // console.log(this.sort_by)
-                    window.location.href = `/booking/search?` + this.generatedURL;
+                    window.location.href = `/guest-booking/search?` + this.generatedURL;
                 },
                 submitForm: function() {
                     // console.log(this.sort_by)
-                    window.location.href = `/booking/search?` + this.generatedURL;
+                    window.location.href = `/guest-booking/search?` + this.generatedURL;
                 },
 
 

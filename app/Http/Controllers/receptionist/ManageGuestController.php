@@ -21,8 +21,9 @@ class ManageGuestController extends Controller
      */
     public function index()
     {
-        $guest = Guest::with('division')->where('status', 1)->get();
-        $guestNonActive = Guest::with('division')->where('status', 2)->withTrashed()->get();
+        $companyId = Auth::user()->company_id;
+        $guest = Guest::with('division')->where('status', 1)->where('company_id', $companyId)->get();
+        $guestNonActive = Guest::with('division')->where('status', 2)->where('company_id', $companyId)->withTrashed()->get();
         // return $user;
         return view('receptionist.manage-receptionist.index', [
             'guest' => $guest,

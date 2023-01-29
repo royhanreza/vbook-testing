@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\receptionist;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Guest;
+use App\Models\GuestActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ReceptionistController extends Controller
+class ActivityGuestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +18,11 @@ class ReceptionistController extends Controller
     public function index()
     {
         $companyId = Auth::user()->company_id;
-        $countUser = User::where('role_id', 6)->where('company_id', $companyId)->count();
+        $guest = GuestActivity::with('user.division', 'guest')->where('company_id', $companyId)->get();
 
-        return view('receptionist.dashboard.index', [
-            'countUser' => $countUser
+        // return $guest;
+        return view('receptionist.manage-receptionist.activity', [
+            'guest' => $guest,
         ]);
     }
 

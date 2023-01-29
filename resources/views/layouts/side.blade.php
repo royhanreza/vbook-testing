@@ -117,7 +117,7 @@
 
             @if (auth()->user()->role_id == 1)
             <div class="menu-item">
-                <a class="menu-link" href="/receptionist">
+                <a class="menu-link" href="/suadmin">
                     <span class="menu-link menu-center" title="Dashboards" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
                             <i class="bi bi-bar-chart-line fs-2"></i>
@@ -186,6 +186,15 @@
                     <span class="menu-link menu-center" title="Manage guest" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
                             <i class="bi bi-person-video2 fs-2"></i>
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('manage-guest.activity')}}">
+                    <span class="menu-link menu-center" title="Guest Activity" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-clock-history fs-2"></i>
                         </span>
                     </span>
                 </a>

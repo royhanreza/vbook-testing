@@ -4,6 +4,7 @@ namespace App\Http\Controllers\guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
+use App\Models\GuestActivity;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,16 +41,31 @@ class AuthGuestController extends Controller
 
         if ($user != null) {
             $userId = $user->id;
-            $checkUserActive = Guest::where('user_id',  $userId)->where('status', 1)->first();
-            if ($checkUserActive != null) {
-                $guestId = $checkUserActive->id;
+            $checkGuestStatus = Guest::where('user_id',  $userId)->where('status', 1)->first();
+            $checkGuestAcitivity = GuestActivity::select('date')->where('user_id',  $userId)->first();
+            if ($checkGuestStatus != null) {
+                $guestId = $checkGuestStatus->id;
+                $companyId = $checkGuestStatus->company_id;
             } else {
                 FacadesSession::flash('error', 'Akun dengan Email yang anda masukan sudah Expired , silahkan aktifkan di resepsionis');
                 return redirect()->route('guest-booking.login');
             }
 
             $dateNow = Carbon::now()->format('Y-m-d');
-            $getDateUser = \Carbon\Carbon::parse($checkUserActive->created_at)->format('Y-m-d');
+            $checkGuestAcitivity = GuestActivity::select('date')->where('user_id',  $userId)->where('date', $dateNow)->first();
+            if ($checkGuestAcitivity == null) {
+
+
+                $dateNowActivity = Carbon::now()->format('Y-m-d');
+                $newActivity = new GuestActivity();
+                $newActivity->user_id = $userId;
+                $newActivity->guest_id = $guestId;
+                $newActivity->company_id = $companyId;
+                $newActivity->date = $dateNowActivity;
+                $newActivity->save();
+            }
+
+            $getDateUser = \Carbon\Carbon::parse($checkGuestStatus->created_at)->format('Y-m-d');
             // return response()->json([
             //     'data' => $dateNow,
             //     'data2' => $getDateUser,

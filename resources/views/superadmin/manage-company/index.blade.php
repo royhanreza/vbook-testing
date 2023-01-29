@@ -332,7 +332,7 @@
 
         // Hook export buttons
         var exportButtons = () => {
-            const documentTitle = 'Data Lowongan Kerja';
+            const documentTitle = 'Data Company';
             var buttons = new $.fn.dataTable.Buttons(table, {
                 buttons: [{
                         extend: 'copyHtml5',

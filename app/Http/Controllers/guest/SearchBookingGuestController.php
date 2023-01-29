@@ -19,12 +19,21 @@ class SearchBookingGuestController extends Controller
     {
         $companyId = Auth::user()->company_id;
         $userId = Auth::user()->id;
+        $roleId = Auth::user()->role_id;
         $divisionId = Auth::user()->division_id;
+        $floor = Auth::user()->guest->floor;
+        // $floors = User::with('guest')->where('company_id', $companyId)->get();
+        // return $floor;
 
 
-        $roomRestrict =  Room::whereHas('roomRestrict', function ($q) use ($divisionId) {
-            $q->where('division_id', $divisionId);
-        })->with(['roomRestrict'])->where('company_id', $companyId)->get();
+
+        if ($roleId == 2) {
+            $roomRestrict =  Room::where('restrict_room', 'yes')->get();
+        } else {
+            $roomRestrict =  Room::whereHas('roomRestrict', function ($q) use ($divisionId) {
+                $q->where('division_id', $divisionId);
+            })->with(['roomRestrict'])->where('company_id', $companyId)->get();
+        }
 
 
 
@@ -39,6 +48,7 @@ class SearchBookingGuestController extends Controller
         $internet = $request->query('internet');
         $capacity = $request->query('capacity');
 
+        // $roomQuery = Room::with(['bookingRoom'])->where('floor', $floor)->where('company_id', $companyId)->whereNull('restrict_room');
         $roomQuery = Room::with(['bookingRoom'])->where('company_id', $companyId)->whereNull('restrict_room');
 
         if ($req_search !== null) {

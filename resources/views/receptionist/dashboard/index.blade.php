@@ -67,10 +67,10 @@
                                             <!--begin::Stats-->
                                             <div class="m-0">
                                                 <!--begin::Number-->
-                                                <span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">-</span>
+                                                <span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">{{ $countUser }}</span>
                                                 <!--end::Number-->
                                                 <!--begin::Desc-->
-                                                <span class="text-gray-500 fw-bold fs-6">User</span>
+                                                <span class="text-gray-500 fw-bold fs-6">Guest Account</span>
                                                 <!--end::Desc-->
                                             </div>
                                             <!--end::Stats-->
@@ -102,7 +102,7 @@
                                                 <span class="text-gray-700 fw-boldest d-block fs-2qx lh-1 ls-n1 mb-1">-</span>
                                                 <!--end::Number-->
                                                 <!--begin::Desc-->
-                                                <span class="text-gray-500 fw-bold fs-6">Room</span>
+                                                <span class="text-gray-500 fw-bold fs-6">Guest Visited</span>
                                                 <!--end::Desc-->
                                             </div>
                                             <!--end::Stats-->
